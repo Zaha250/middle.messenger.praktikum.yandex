@@ -4,7 +4,7 @@
   "description": "---",
   "main": "index.js",
   "scripts": {
-    "start": "parcel -p 3000 src/pages/index.hbs --no-cache && parcel watch ./src/**",
+    "start": "parcel -p 3000 src/pages/* --no-cache",
     "build": "parcel build src/pages/index.hbs"
   },
   "repository": {
@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Zaha250/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
+    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@parcel/transformer-sass": "^2.5.0",
     "parcel": "^2.5.0"
   }
 }
