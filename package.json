@@ -1,0 +1,24 @@
+{
+  "name": "middle.messenger.praktikum.yandex",
+  "version": "1.0.0",
+  "description": "---",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel -p 3000 src/pages/index.hbs --no-cache && parcel watch ./src/**",
+    "build": "parcel build src/pages/index.hbs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zaha250/middle.messenger.praktikum.yandex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zaha250/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/Zaha250/middle.messenger.praktikum.yandex#readme",
+  "devDependencies": {
+    "parcel": "^2.5.0"
+  }
+}
