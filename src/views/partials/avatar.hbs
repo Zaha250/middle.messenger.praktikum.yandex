@@ -1,0 +1,13 @@
+<div class="avatar {{classes}}">
+    <div class="avatar-photo">
+        {{#if photo}}
+            <img src="{{photo}}" alt="{{name}}">
+        {{else}}
+            <div class="avatar-placeholder">
+            </div>
+        {{/if}}
+    </div>
+    {{#if name}}
+        <h5 class="avatar__name">{{name}}</h5>
+    {{/if}}
+</div>

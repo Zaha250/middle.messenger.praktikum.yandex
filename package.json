@@ -4,7 +4,7 @@
   "description": "---",
   "main": "index.js",
   "scripts": {
-    "start": "parcel -p 3000 src/views/*.hbs --no-cache && parcel watch src/**",
+    "start": "parcel -p 3000 src/views/*.hbs --no-cache && parcel watch src/*",
     "build": "parcel build src/views/index.hbs"
   },
   "repository": {
