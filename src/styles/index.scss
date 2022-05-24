@@ -7,11 +7,20 @@
 }
 
 body{
-  font-family: 'Inter', sans-serif;
+  font-family: $font-f;
   font-size: 12px;
   line-height: 15px;
   font-weight: 500;
   color: $black;
+}
+
+a{
+  text-decoration: none;
+}
+
+input,
+button{
+  font-family: $font-f;
 }
 
 .btn{
@@ -23,9 +32,30 @@ body{
   outline: none;
   background-color: transparent;
   border-radius: 8px;
+  cursor: pointer;
+  transition: all .15s ease-in;
 }
 
 .btn_primary{
   background-color: $primary;
   color: #fff;
+
+  &:hover{
+    background-color: darken($primary, 5);
+  }
+}
+
+.input{
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: $black;
+  padding: 7px 0;
+  border: none;
+  border-bottom: 1px solid $primary;
+  outline: none;
+
+  &::placeholder{
+    color: $gray;
+  }
 }
