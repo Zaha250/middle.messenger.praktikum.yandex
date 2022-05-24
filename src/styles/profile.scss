@@ -1,0 +1,28 @@
+@import "vars";
+
+.profile{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 60px;
+
+  &__avatar{
+    width: 130px;
+    height: 130px;
+    cursor: pointer;
+    margin-bottom: 20px;
+
+    .avatar-placeholder::before{
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &__name{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    margin-bottom: 60px;
+  }
+}
