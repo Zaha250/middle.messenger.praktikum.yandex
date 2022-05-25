@@ -4,8 +4,9 @@
   "description": "---",
   "scripts": {
     "dev": "parcel src/views/*.hbs --no-cache && parcel watch src/*",
-    "start": "nodemon server/server.js",
-    "build": "parcel build src/views/*.hbs --public-url ./"
+    "start:server": "nodemon server/server.js",
+    "build": "parcel build src/views/*.hbs --public-url ./",
+    "start": "npm run build && npm run start:server"
   },
   "repository": {
     "type": "git",
