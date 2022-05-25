@@ -4,8 +4,9 @@
   "description": "---",
   "scripts": {
     "dev": "parcel src/views/*.hbs --no-cache && parcel watch src/*",
-    "start": "nodemon server/server.js",
-    "build": "parcel build src/views/*.hbs --public-url ./"
+    "start:server": "nodemon server/server.js",
+    "build": "parcel build src/views/*.hbs --public-url ./",
+    "start": "npm run build && npm run start:server"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@parcel/config-default": "^2.5.0",
     "@parcel/transformer-sass": "^2.5.0",
     "nodemon": "^2.0.16",
     "parcel": "^2.5.0"
