@@ -12,10 +12,10 @@
 npm run dev
 ```
 
-Для запуска nodejs сервера:
+Сборка проекта в production:
 
 ```sh
-npm run start:server
+npm run build
 ```
 
 Для запуска проекта на сервере используется команда:
