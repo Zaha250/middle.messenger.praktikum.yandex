@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600&family=Manrope:wght@300;400;500;700;800&display=swap');
+@import "reset";
+@import "vars";
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  font-family: $font-f;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 500;
+  color: $black;
+}
+
+a{
+  text-decoration: none;
+}
+
+input,
+button{
+  font-family: $font-f;
+}
+
+.btn{
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  padding: 12px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .15s ease-in;
+}
+
+.btn_primary{
+  background-color: $primary;
+  color: #fff;
+
+  &:hover{
+    background-color: darken($primary, 5);
+  }
+}
+
+.label{
+  font-size: 9px;
+  line-height: 9px;
+  color: $gray;
+}
+
+.input{
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: $black;
+  padding: 7px 0;
+  border: none;
+  border-bottom: 1px solid $primary;
+  outline: none;
+
+  &::placeholder{
+    color: $gray;
+  }
+}
+
+.avatar{
+  display: flex;
+  align-items: center;
+
+  &-photo{
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-placeholder{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #EFEFEF;
+
+    &::before{
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      background: url("../assets/icons/man.svg") no-repeat center / 100%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__name{
+    color: $black;
+    font-size: 12px;
+    line-height: 12px;
+    margin-left: 8px;
+  }
+}

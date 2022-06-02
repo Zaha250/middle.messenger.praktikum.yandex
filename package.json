@@ -1,0 +1,35 @@
+{
+  "name": "middle.messenger.praktikum.yandex",
+  "version": "1.0.0",
+  "description": "---",
+  "scripts": {
+    "dev": "parcel src/views/*.hbs --no-cache && parcel watch src/*",
+    "start:server": "nodemon server/server.js",
+    "build": "parcel build src/views/*.hbs --public-url ./",
+    "start": "npm run build && npm run start:server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zaha250/middle.messenger.praktikum.yandex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zaha250/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/Zaha250/middle.messenger.praktikum.yandex#readme",
+  "engines": {
+    "node": "12.20.0"
+  },
+  "devDependencies": {
+    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@parcel/config-default": "^2.5.0",
+    "@parcel/transformer-sass": "^2.5.0",
+    "nodemon": "^2.0.16",
+    "parcel": "^2.5.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
