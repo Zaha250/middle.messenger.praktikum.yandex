@@ -1,3 +1,12 @@
-const test = '123';
+import * as components from 'components';
+import { BlockConstructable, registerComponent, renderDOM } from './core';
+import RegPage from './pages/reg';
+import './styles/index.scss';
 
-console.log('123');
+Object.values(components).forEach((Component: BlockConstructable) => {
+    registerComponent(Component);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderDOM('#app', new RegPage({}));
+});

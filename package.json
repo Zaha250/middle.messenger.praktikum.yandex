@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "description": "---",
   "scripts": {
-    "dev": "parcel src/views/*.hbs --no-cache && parcel watch src/*",
+    "dev": "parcel src/index.html --no-cache",
     "start:server": "nodemon server/server.js",
-    "build": "parcel build src/views/*.hbs --public-url ./",
+    "build": "parcel build src/index.html --public-url ./",
     "start": "npm run build && npm run start:server",
-    "eslint": "eslint src --ext .js,.ts,.tsx",
-    "eslint:fix": "eslint --fix src --ext .js,.ts,.tsx"
+    "lint": "eslint --ext .js,.ts,.tsx ./src",
+    "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src"
+  },
+  "alias": {
+    "core": "./src/core",
+    "pages": "./src/pages",
+    "components": "./src/components"
   },
   "repository": {
     "type": "git",
@@ -32,12 +37,15 @@
     "@typescript-eslint/parser": "5.27.0",
     "eslint": "8.16.0",
     "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-plugin-import": "2.26.0",
     "nodemon": "2.0.16",
     "parcel": "2.5.0",
     "typescript": "4.7.2"
   },
   "dependencies": {
-    "express": "4.18.1"
+    "express": "4.18.1",
+    "handlebars": "4.7.7",
+    "nanoid": "3.3.4"
   }
 }

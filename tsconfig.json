@@ -4,7 +4,16 @@
     "target": "es2016",
     "declaration": false,
     "module": "commonjs",
+    //    "rootDir": "./src",
+    "baseUrl": "./src",
     "strictNullChecks": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["node_modules/@types", "typings/app.d.ts"],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
   }
 }

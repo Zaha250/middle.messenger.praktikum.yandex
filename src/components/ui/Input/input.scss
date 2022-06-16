@@ -1,0 +1,23 @@
+@import "../../../styles/vars";
+
+.label{
+  font-size: 9px;
+  line-height: 9px;
+  color: $gray;
+  text-align: left;
+}
+
+.input{
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: $black;
+  padding: 7px 0;
+  border: none;
+  border-bottom: 1px solid $primary;
+  outline: none;
+
+  &::placeholder{
+    color: $gray;
+  }
+}
