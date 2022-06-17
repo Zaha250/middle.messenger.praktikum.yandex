@@ -1,6 +1,5 @@
 import * as components from 'components';
-import { BlockConstructable, registerComponent, renderDOM } from './core';
-import RegPage from './pages/reg';
+import {BlockConstructable, registerComponent, Router} from './core';
 import './styles/index.scss';
 
 Object.values(components).forEach((Component: BlockConstructable) => {
@@ -8,5 +7,5 @@ Object.values(components).forEach((Component: BlockConstructable) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderDOM('#app', new RegPage({}));
+    new Router().push('/');
 });

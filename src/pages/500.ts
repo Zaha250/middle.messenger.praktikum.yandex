@@ -2,6 +2,8 @@ import { Block } from '../core';
 import '../styles/pages/errorPage.scss';
 
 class ServerErrorPage extends Block {
+    static componentName = 'ServerErrorPage';
+
     render() {
         // language=hbs
         return `

@@ -29,7 +29,7 @@ export class ControlledInput extends Block {
     render() {
         // language=hbs
         return `
-            <div class="controlled-input">
+            <div class="controlled-input {{wrapperClasses}}">
                 <div class="label">{{label}}</div>
                 {{{Input 
                     name=name 

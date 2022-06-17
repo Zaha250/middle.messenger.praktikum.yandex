@@ -2,6 +2,8 @@ import { Block } from '../core';
 import '../styles/pages/errorPage.scss';
 
 class NotFoundPage extends Block {
+    static componentName = 'NotFoundPage';
+
     render() {
         // language=hbs
         return `

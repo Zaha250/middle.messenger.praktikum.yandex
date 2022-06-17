@@ -1,11 +1,13 @@
-import { Block } from '../core';
+import {Block, Router} from '../core';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
 import '../styles/pages/auth.scss';
 
 class RegPage extends Block {
-    constructor({ props }) {
+    static componentName = 'RegPage';
+
+    constructor() {
         super({
-            ...props,
+            onClick: () => new Router().push('/auth'),
             onSubmit: (e: SubmitEvent) => {
                 e.preventDefault();
 
@@ -110,7 +112,7 @@ class RegPage extends Block {
                     </div>
                     <div class="form-footer">
                         {{{ Button type="submit" classes="form__btn" text="Зарегистрироваться" onClick=onSubmit}}}
-                        <a href="./auth.hbs" class="form__link">Войти</a>
+                        {{{ Button text="Войти" variant="transparent" onClick=onClick }}}
                     </div>
                 </form>
             </main>

@@ -1,18 +1,18 @@
 import { Block } from '../../../core';
-import './dialogs.scss';
+import './chatList.scss';
 
-export class Dialogs extends Block {
-    static componentName = 'Dialogs';
+export class ChatList extends Block {
+    static componentName = 'ChatList';
 
     render() {
         // language=hbs
         return `
-            <aside class="dialogs">
-                <div class="dialogs-header">
+            <aside class="chatList">
+                <div class="chatList-header">
                     <a href="./profile.hbs">
-                        {{{ Avatar wrapperClasses="dialogs-header__avatar" name="Александр" }}}
+                        {{{ Avatar wrapperClasses="chatList-header__avatar" name="Александр" }}}
                     </a>
-                    {{{ Search classes="dialogs__search" }}}
+                    {{{ Search classes="chatList__search" }}}
                 </div>
                 <div class="dialogs-body">
                     {{{ Chat

@@ -1,0 +1,51 @@
+@import "../../../styles/vars";
+
+.message{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  background-color: $message_bg;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 15px;
+  max-width: 380px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+
+  &.own{
+    background-color: $primary_light;
+    margin-left: auto;
+
+    & .message__time{
+      color: $primary;
+    }
+  }
+
+  &-info{
+    display: flex;
+    align-items: flex-end;
+    font-size: 9px;
+    line-height: 9px;
+    color: $gray;
+  }
+
+  &__delivery{
+    margin-right: 4px;
+    width: 12px;
+    height: 10px;
+
+    &.send{
+      background: url("../../../assets/icons/check.svg") no-repeat center / 100%;
+    }
+
+    &.read{
+      background: url("../../../assets/icons/message_read.svg") no-repeat center / 100%;
+    }
+  }
+}
+
+

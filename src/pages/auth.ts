@@ -1,16 +1,19 @@
 import { ValidationRuleEnum } from '../helpers/validator';
-import { Block } from '../core';
+import {Block, Router} from '../core';
 import '../styles/pages/auth.scss';
 
 interface IAuthPageProps {}
 
 class AuthPage extends Block {
+    static componentName = 'AuthPage';
+
     constructor(props: IAuthPageProps) {
         super({
             ...props,
             onBlur: () => console.log('blur'),
             onChange: () => console.log('change'),
             onFocus: () => console.log('focus'),
+            onClick: () => new Router().push('/reg')
         });
     }
 
@@ -42,8 +45,8 @@ class AuthPage extends Block {
                         </div>
                     </div>
                     <div class="form-footer">
-                        <button class="btn btn_primary form__btn">Авторизоваться</button>
-                        <a href="./reg.hbs" class="form__link">Нет аккаунта?</a>
+                        {{{ Button text="Авторизоваться" classes="form__btn" }}}
+                        {{{ Button text="Нет аккаунта?" variant="transparent" classes="form__btn" onClick=onClick }}}
                     </div>
                 </form>
             </main>
