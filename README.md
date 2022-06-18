@@ -24,3 +24,4 @@ npm run build
 ```sh
 npm run start
 ```
+Ссылка на PR Sprint 2 https://github.com/Zaha250/middle.messenger.praktikum.yandex/pull/3
