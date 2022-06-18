@@ -1,4 +1,4 @@
-import {Block, Router} from '../core';
+import { Block, Router } from 'core';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
 import '../styles/pages/auth.scss';
 

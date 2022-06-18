@@ -41,6 +41,7 @@ export function validationField(rule: ValidationRuleEnum, value: string) {
         return isValid ? '' : 'Неверная фамилия';
     }
 
-        default: return '';
+    default:
+        return '';
     }
 }

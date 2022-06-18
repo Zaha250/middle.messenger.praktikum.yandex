@@ -1,6 +1,6 @@
-import { Block } from '../core';
+import { Block } from 'core';
+import 'components/blocks/chatList/chatList.scss';
 import '../styles/pages/messenger.scss';
-import '../components/blocks/chatList/chatList.scss';
 
 interface IMessengerProps {
     dialogId?: string | number;
@@ -10,8 +10,9 @@ class Messenger extends Block {
     static componentName = 'Messenger';
 
     constructor(props: IMessengerProps) {
-        super({...props});
+        super({ ...props });
     }
+
     render() {
         // language=hbs
         return `

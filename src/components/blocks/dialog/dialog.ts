@@ -1,4 +1,4 @@
-import {Block} from "../../../core";
+import { Block } from 'core';
 import './dialog.scss';
 
 interface IDialogProps {
@@ -17,17 +17,17 @@ export class Dialog extends Block {
                 const message = this.element?.querySelector('[name=message]').value;
                 if (!message.trim().length) return;
 
-                console.log('Message: ' + message);
+                console.log(`Message: ${message}`);
             },
             onClickHandler: () => {
                 this.props.sendMessageHandler();
-            }
+            },
         });
     }
 
     render() {
         // language=hbs
-        return`
+        return `
             <div class="dialog">
                 <div class="dialog-header">
                     {{{ Avatar name=name }}}

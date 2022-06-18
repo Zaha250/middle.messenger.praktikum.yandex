@@ -25,3 +25,19 @@
 .transparent{
   color: $primary;
 }
+
+.line{
+  text-align: left;
+  width: 100%;
+  color: $primary;
+  background: none;
+  border-bottom: 1px solid #eaeaea;
+  padding: 10px 0;
+  font-size: 13px;
+  line-height: 13px;
+  transition: border-color .15s ease-in;
+
+  &:hover{
+    border-bottom-color: $primary;
+  }
+}

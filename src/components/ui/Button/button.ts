@@ -1,4 +1,4 @@
-import { Block } from '../../../core';
+import { Block } from 'core';
 import './button.scss';
 
 interface IButtonProps {
@@ -12,7 +12,9 @@ interface IButtonProps {
 export class Button extends Block {
     static componentName = 'Button';
 
-    constructor({ type = 'text', variant = 'primary', onClick, ...props }: IButtonProps) {
+    constructor({
+        type = 'text', variant = 'primary', onClick, ...props 
+    }: IButtonProps) {
         super({
             ...props,
             type,

@@ -1,5 +1,4 @@
-import { ValidationRuleEnum } from '../helpers/validator';
-import {Block, Router} from '../core';
+import { Block, Router } from 'core';
 import '../styles/pages/auth.scss';
 
 interface IAuthPageProps {}
@@ -13,7 +12,7 @@ class AuthPage extends Block {
             onBlur: () => console.log('blur'),
             onChange: () => console.log('change'),
             onFocus: () => console.log('focus'),
-            onClick: () => new Router().push('/reg')
+            onClick: () => new Router().push('/reg'),
         });
     }
 

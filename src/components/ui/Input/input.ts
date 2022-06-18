@@ -1,4 +1,4 @@
-import { Block } from '../../../core';
+import { Block } from 'core';
 import './input.scss';
 
 export interface IInputProps {
@@ -16,7 +16,9 @@ export interface IInputProps {
 export class Input extends Block {
     static componentName = 'Input';
 
-    constructor({ type = 'text', onChange, onBlur, onFocus, ...props }: IInputProps) {
+    constructor({
+        type = 'text', onChange, onBlur, onFocus, ...props 
+    }: IInputProps) {
         super({
             ...props,
             type,

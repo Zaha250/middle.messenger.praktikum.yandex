@@ -10,6 +10,9 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "typeRoots": ["node_modules/@types", "typings/app.d.ts"],
     "lib": [
       "es2017",

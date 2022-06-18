@@ -1,4 +1,4 @@
-import { Block } from '../../../core';
+import { Block } from 'core';
 import './chat.scss';
 
 interface IChatProps {
@@ -14,7 +14,9 @@ interface IChatProps {
 export class Chat extends Block {
     static componentName = 'Chat';
 
-    constructor({ classes, last_message, lastMessageDate, owner, avatar, unreadCount, name }: IChatProps) {
+    constructor({
+        classes, last_message, lastMessageDate, owner, avatar, unreadCount, name, 
+    }: IChatProps) {
         super({
             classes, last_message, lastMessageDate, owner, avatar, unreadCount, name,
         });

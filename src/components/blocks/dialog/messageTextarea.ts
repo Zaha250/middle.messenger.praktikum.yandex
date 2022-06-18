@@ -1,4 +1,4 @@
-import {Block} from "../../../core";
+import { Block } from '../../../core';
 
 interface IMessageTextareaProps {
     onKeyDownHandler: () => void;
@@ -17,8 +17,8 @@ export class MessageTextarea extends Block {
                         e.preventDefault();
                         onKeyDownHandler();
                     }
-                }
-            }
+                },
+            },
         });
     }
 

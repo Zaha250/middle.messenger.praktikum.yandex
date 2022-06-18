@@ -1,5 +1,5 @@
-import { Block } from '../../../core';
-import { IInputProps } from '../../ui/Input/input';
+import { Block } from 'core';
+import { IInputProps } from 'components/ui/Input/input';
 import './controlledInput.scss';
 import { validationField, ValidationRuleEnum } from '../../../helpers/validator';
 

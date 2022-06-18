@@ -1,5 +1,5 @@
-import { Block } from '../core';
-import {validationField, ValidationRuleEnum} from "../helpers/validator";
+import { Block } from 'core';
+import { validationField, ValidationRuleEnum } from '../helpers/validator';
 import '../styles/pages/profile.scss';
 
 interface IProfilePageProps {}
@@ -9,16 +9,16 @@ class ProfilePage extends Block {
 
     constructor(props: IProfilePageProps) {
         super({
+            ...props,
             onSubmit: (e: SubmitEvent) => {
                 e.preventDefault();
-                console.log(123)
 
-                const inputs = this.element?.querySelectorAll('input');
+                const inputs = this.element?.querySelectorAll('.profile__input') as NodeList;
                 let isValid = true;
                 const data = {};
 
-                if (inputs) {
-                    inputs.forEach((input) => {
+                if (inputs.length) {
+                    inputs.forEach((input: HTMLInputElement) => {
                         const { value, name } = input;
                         const errorMessage = validationField(ValidationRuleEnum[name], value);
 
@@ -34,7 +34,7 @@ class ProfilePage extends Block {
                 if (isValid) {
                     console.log(data);
                 }
-            }
+            },
         });
     }
 
@@ -54,7 +54,8 @@ class ProfilePage extends Block {
                 <form class="profile-form" id="profile-form" onsubmit="return false;">
                     <div class="profile-fields">
                         {{{ ControlledInput 
-                                name="email" 
+                                name="Email" 
+                                ref="Email" 
                                 id="email" 
                                 label="Почта" 
                                 validationRule="${ValidationRuleEnum.Email}"
@@ -62,7 +63,8 @@ class ProfilePage extends Block {
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
-                                name="login" 
+                                name="Login" 
+                                ref="Login" 
                                 id="login" 
                                 label="Логин" 
                                 validationRule="${ValidationRuleEnum.Login}"
@@ -70,7 +72,8 @@ class ProfilePage extends Block {
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
-                                name="first_name" 
+                                name="FirstName" 
+                                ref="FirstName" 
                                 id="first_name" 
                                 label="Имя" 
                                 validationRule="${ValidationRuleEnum.FirstName}"
@@ -78,7 +81,8 @@ class ProfilePage extends Block {
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
-                                name="second_name" 
+                                name="SecondName" 
+                                ref="SecondName" 
                                 id="second_name" 
                                 label="Фамилия" 
                                 validationRule="${ValidationRuleEnum.SecondName}"
@@ -86,7 +90,8 @@ class ProfilePage extends Block {
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
-                                name="display_name" 
+                                name="DisplayName" 
+                                ref="DisplayName" 
                                 id="display_name" 
                                 label="Имя в чате" 
                                 classes="profile__input" 
@@ -94,7 +99,8 @@ class ProfilePage extends Block {
                         }}}
                         {{{ ControlledInput 
                                 type="tel" 
-                                name="phone" 
+                                name="Phone" 
+                                ref="Phone" 
                                 id="phone" 
                                 label="Телефон" 
                                 validationRule="${ValidationRuleEnum.Phone}"
@@ -103,12 +109,8 @@ class ProfilePage extends Block {
                         }}}
                     </div>
                     <div>
-                        <button class="profile-form__btn">
-                            Изменить данные
-                        </button>
-                        <button class="profile-form__btn" id="change_password">
-                            Изменить пароль
-                        </button>
+                        {{{ Button variant="line" text="Изменить данные" onClick=onSubmit }}}
+                        {{{ Button variant="line" text="Изменить пароль" }}}
                         <a href="#" class="profile-form__btn profile-form__btn_danger">
                             Выйти
                         </a>

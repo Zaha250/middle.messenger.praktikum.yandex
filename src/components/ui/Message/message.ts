@@ -1,4 +1,4 @@
-import {Block} from "../../../core";
+import { Block } from 'core';
 import './message.scss';
 
 interface IMessageProps {
@@ -12,7 +12,7 @@ export class Message extends Block {
 
     constructor({ ...props }: IMessageProps) {
         super({
-            ...props
+            ...props,
         });
     }
 

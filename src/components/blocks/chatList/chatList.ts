@@ -1,4 +1,4 @@
-import { Block } from '../../../core';
+import { Block } from 'core';
 import './chatList.scss';
 
 export class ChatList extends Block {
