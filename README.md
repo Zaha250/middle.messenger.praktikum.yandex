@@ -27,3 +27,5 @@ npm run start
 
 В рамках 2-го спринта был внедрен компонентный подход, реализован свой класс по отправке запросов на сервер.
 Добавлены: Typescript, ESLint. 
+
+[Ссылка](https://github.com/Zaha250/middle.messenger.praktikum.yandex/pull/3) на PR Sprint 2
