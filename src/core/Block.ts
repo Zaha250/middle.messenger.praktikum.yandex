@@ -20,6 +20,7 @@ export default class Block<P = any> {
 
     public id = nanoid(5);
 
+    // @ts-expect-error
     private readonly _meta: BlockMeta;
 
     protected _element: Nullable<HTMLElement> = null;
@@ -64,6 +65,7 @@ export default class Block<P = any> {
         this._element = this._createDocumentElement('div');
     }
 
+    // @ts-expect-error
     protected getStateFromProps(props: any): void {
         this.state = {};
     }
@@ -73,11 +75,11 @@ export default class Block<P = any> {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props);
     }
 
-    _componentDidMount(props: P) {
-        this.componentDidMount(props);
+    _componentDidMount() {
+        this.componentDidMount();
     }
 
-    componentDidMount(props: P) {}
+    componentDidMount() {}
 
     _componentDidUpdate(oldProps: P, newProps: P) {
         const response = this.componentDidUpdate(oldProps, newProps);
@@ -88,7 +90,7 @@ export default class Block<P = any> {
     }
 
     componentDidUpdate(oldProps: P, newProps: P) {
-        return true;
+        return oldProps !== newProps;
     }
 
     setProps = (nextProps: P) => {

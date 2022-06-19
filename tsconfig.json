@@ -15,7 +15,8 @@
     "typeRoots": ["node_modules/@types", "typings/app.d.ts"],
     "lib": [
       "es2017",
-      "dom"
+      "dom",
+      "dom.iterable"
     ]
   }
 }

@@ -1,4 +1,5 @@
 import { Block, Router } from 'core';
+import { validationField, ValidationRuleEnum } from '../helpers/validator';
 import '../styles/pages/auth.scss';
 
 interface IAuthPageProps {}
@@ -9,9 +10,31 @@ class AuthPage extends Block {
     constructor(props: IAuthPageProps) {
         super({
             ...props,
-            onBlur: () => console.log('blur'),
-            onChange: () => console.log('change'),
-            onFocus: () => console.log('focus'),
+            onSubmit: (e: SubmitEvent) => {
+                e.preventDefault();
+
+                const inputs = this.element?.querySelectorAll('input');
+                let isValid = true;
+                const data: Record<string, string> = {};
+
+                if (inputs) {
+                    inputs.forEach((input) => {
+                        const { value, name } = input as HTMLInputElement;
+                        const errorMessage = validationField(ValidationRuleEnum[name], value);
+
+                        if (errorMessage) {
+                            isValid = false;
+                            this.refs[name].refs.error.setProps({ text: errorMessage });
+                        } else {
+                            data[name] = value;
+                        }
+                    });
+                }
+
+                if (isValid) {
+                    console.log(data);
+                }
+            },
             onClick: () => new Router().push('/reg'),
         });
     }
@@ -25,26 +48,24 @@ class AuthPage extends Block {
                         <h2 class="form__title">Вход</h2>
                         <div class="form-fields">
                             {{{ControlledInput 
-                                name="login"
-                                id="login"
+                                name="Login"
+                                ref="Login"
+                                validationRule="${ValidationRuleEnum.Login}"
                                 placeholder="Логин" 
                                 classes="form__input"
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                             {{{ControlledInput 
                                 type="password" 
-                                name="password" 
-                                id="password" 
+                                ref="Password"
+                                validationRule="${ValidationRuleEnum.Password}"
+                                name="Password" 
                                 placeholder="Пароль" 
                                 classes="form__input"
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                         </div>
                     </div>
                     <div class="form-footer">
-                        {{{ Button text="Авторизоваться" classes="form__btn" }}}
+                        {{{ Button type="submit" text="Авторизоваться" classes="form__btn" onClick=onSubmit }}}
                         {{{ Button text="Нет аккаунта?" variant="transparent" classes="form__btn" onClick=onClick }}}
                     </div>
                 </form>

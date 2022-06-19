@@ -14,10 +14,10 @@ export class Dialog extends Block {
             ...props,
             name,
             sendMessageHandler: () => {
-                const message = this.element?.querySelector('[name=message]').value;
-                if (!message.trim().length) return;
+                const { value } = this.element?.querySelector('[name=message]') as HTMLInputElement;
+                if (!value.trim().length) return;
 
-                console.log(`Message: ${message}`);
+                console.log(`Message: ${value}`);
             },
             onClickHandler: () => {
                 this.props.sendMessageHandler();
