@@ -15,12 +15,12 @@ class ProfilePage extends Block {
 
                 const inputs = this.element?.querySelectorAll('.profile__input') as NodeList;
                 let isValid = true;
-                const data = {};
+                const data: Record<string, string> = {};
 
                 if (inputs.length) {
-                    inputs.forEach((input: HTMLInputElement) => {
-                        const { value, name } = input;
-                        const errorMessage = validationField(ValidationRuleEnum[name], value);
+                    inputs.forEach((input) => {
+                        const { value, name } = input as HTMLInputElement;
+                        const errorMessage = validationField(ValidationRuleEnum[name as keyof typeof ValidationRuleEnum], value);
 
                         if (errorMessage) {
                             isValid = false;

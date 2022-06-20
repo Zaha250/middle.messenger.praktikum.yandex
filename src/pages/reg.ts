@@ -13,12 +13,12 @@ class RegPage extends Block {
 
                 const inputs = this.element?.querySelectorAll('input');
                 let isValid = true;
-                const data = {};
+                const data: Record<string, string> = {};
 
                 if (inputs) {
                     inputs.forEach((input) => {
-                        const { value, name } = input;
-                        const errorMessage = validationField(ValidationRuleEnum[name], value);
+                        const { value, name } = input as HTMLInputElement;
+                        const errorMessage = validationField(ValidationRuleEnum[name as keyof typeof ValidationRuleEnum], value);
 
                         if (errorMessage) {
                             isValid = false;

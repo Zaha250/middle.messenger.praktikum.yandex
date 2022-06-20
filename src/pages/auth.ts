@@ -10,29 +10,32 @@ class AuthPage extends Block {
     constructor(props: IAuthPageProps) {
         super({
             ...props,
-            onSubmit: (e: SubmitEvent) => {
-                e.preventDefault();
+            events: {
+                submit: (e: SubmitEvent) => {
+                    e.preventDefault();
+                    console.log(this)
 
-                const inputs = this.element?.querySelectorAll('input');
-                let isValid = true;
-                const data: Record<string, string> = {};
+                    const inputs = this.element?.querySelectorAll('input');
+                    let isValid = true;
+                    const data: Record<string, string> = {};
 
-                if (inputs) {
-                    inputs.forEach((input) => {
-                        const { value, name } = input as HTMLInputElement;
-                        const errorMessage = validationField(ValidationRuleEnum[name], value);
+                    if (inputs) {
+                        inputs.forEach((input) => {
+                            const { value, name } = input as HTMLInputElement;
+                            const errorMessage = validationField(ValidationRuleEnum[name as keyof typeof ValidationRuleEnum], value);
 
-                        if (errorMessage) {
-                            isValid = false;
-                            this.refs[name].refs.error.setProps({ text: errorMessage });
-                        } else {
-                            data[name] = value;
-                        }
-                    });
-                }
+                            if (errorMessage) {
+                                isValid = false;
+                                this.refs[name].refs.error.setProps({ text: errorMessage });
+                            } else {
+                                data[name] = value;
+                            }
+                        });
+                    }
 
-                if (isValid) {
-                    console.log(data);
+                    if (isValid) {
+                        console.log(data);
+                    }
                 }
             },
             onClick: () => new Router().push('/reg'),
@@ -65,7 +68,7 @@ class AuthPage extends Block {
                         </div>
                     </div>
                     <div class="form-footer">
-                        {{{ Button type="submit" text="Авторизоваться" classes="form__btn" onClick=onSubmit }}}
+                        {{{ Button type="submit" text="Авторизоваться" classes="form__btn" }}}
                         {{{ Button text="Нет аккаунта?" variant="transparent" classes="form__btn" onClick=onClick }}}
                     </div>
                 </form>
