@@ -1,0 +1,16 @@
+@import "../../../styles/vars";
+
+.search__input{
+  font-size: 12px;
+  line-height: 12px;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #EFEFEF;
+  border: none;
+  outline: none;
+
+  &::placeholder{
+    color: $gray;
+    text-align: center;
+  }
+}

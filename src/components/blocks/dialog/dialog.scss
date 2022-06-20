@@ -1,0 +1,82 @@
+@import "../../../styles/vars";
+
+$dialog-header_height: 54px;
+$message_bg: #EFEFEF;
+
+.dialog{
+  position: relative;
+  padding-left: $chatList_width + 20px;
+  width: 100%;
+
+  &-header{
+    position: fixed;
+    top: 0;
+    left: $chatList_width + 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    height: $dialog-header_height;
+    background-color: #FFF;
+    border-bottom: 1px solid $gray_light;
+    z-index: 5;
+  }
+
+  &-body{
+    height: 100%;
+    padding: 110px 20px 0 0;
+  }
+
+  &-footer{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: $chatList_width + 20px;
+    right: 20px;
+    padding: 10px 0;
+    border-top: 1px solid $gray_light;
+  }
+
+  &__settings{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 24px;
+    transform: rotate(90deg);
+    cursor: pointer;
+  }
+
+  &__date{
+    position: absolute;
+    top: $dialog-header_height + 20px;
+    left: 50%;
+    text-align: center;
+    z-index: 2;
+    padding: 8px 12px;
+    background-color: $gray_bg;
+    border-radius: 30px;
+  }
+
+  &__message{
+    width: 100%;
+    min-height: 37px;
+    padding: 0 10px;
+    border-radius: 30px;
+    background-color: $message_bg;
+    border: none;
+    resize: none;
+    outline: none;
+    margin: 0 14px;
+    line-height: 20px;
+  }
+
+  &__attachment{
+    border: none;
+    outline: none;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background: url("../../../assets/icons/attachment.svg") no-repeat center / 100%;
+  }
+}
