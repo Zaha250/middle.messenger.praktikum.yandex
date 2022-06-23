@@ -23,7 +23,7 @@ function queryStringify(data: TRequestData) {
     }, '?');
 }
 
-class HTTPTransport {
+class HTTP {
     private readonly _parentPath: string;
 
     constructor(_parentPath: string = '') {
@@ -96,4 +96,4 @@ class HTTPTransport {
     };
 }
 
-export default new HTTPTransport();
+export default HTTP;

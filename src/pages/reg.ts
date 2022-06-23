@@ -7,7 +7,7 @@ class RegPage extends Block {
 
     constructor() {
         super({
-            onClick: () => new Router().push('/auth'),
+            onClick: () => new Router('#app').go('/auth'),
             onSubmit: (e: SubmitEvent) => {
                 e.preventDefault();
 

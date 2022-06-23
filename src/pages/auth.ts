@@ -13,8 +13,6 @@ class AuthPage extends Block {
             events: {
                 submit: (e: SubmitEvent) => {
                     e.preventDefault();
-                    console.log(this)
-
                     const inputs = this.element?.querySelectorAll('input');
                     let isValid = true;
                     const data: Record<string, string> = {};
@@ -36,9 +34,9 @@ class AuthPage extends Block {
                     if (isValid) {
                         console.log(data);
                     }
-                }
+                },
             },
-            onClick: () => new Router().push('/reg'),
+            onClick: () => new Router('#app').go('/reg'),
         });
     }
 
