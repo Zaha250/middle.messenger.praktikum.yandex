@@ -27,26 +27,26 @@ class HTTP {
     private readonly _parentPath: string;
 
     constructor(_parentPath: string = '') {
-        this._parentPath = _parentPath;
+        this._parentPath = process.env.BASE_URL + _parentPath;
     }
 
-    public get = (url: string, options = {}): Promise<XMLHttpRequest> => {
+    public get = <R>(url: string, options = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.GET });
     };
 
-    public post = (url: string, options = {}): Promise<XMLHttpRequest> => {
+    public post = <R>(url: string, options = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.POST });
     };
 
-    public put = (url: string, options = {}): Promise<XMLHttpRequest> => {
+    public put = <R>(url: string, options = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.PUT });
     };
 
-    public patch = (url: string, options = {}): Promise<XMLHttpRequest> => {
+    public patch = <R>(url: string, options = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.PATCH });
     };
 
-    public delete = (url: string, options = {}): Promise<XMLHttpRequest> => {
+    public delete = <R>(url: string, options = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.DELETE });
     };
 

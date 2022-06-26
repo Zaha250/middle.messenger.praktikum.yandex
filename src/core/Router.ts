@@ -70,7 +70,8 @@ class Router {
     }
 
     getRoute(pathname: string) {
-        return this.routes.find((route) => route.match(pathname));
+        const router = this.routes.find((route) => route.match(pathname));
+        return router || this.routes.find((route) => route.match('*'));
     }
 }
 

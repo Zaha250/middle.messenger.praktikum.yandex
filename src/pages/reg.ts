@@ -1,13 +1,16 @@
 import { Block, Router } from 'core';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
 import '../styles/pages/auth.scss';
+import { AuthApi } from 'api/authApi';
+
+const router = new Router('#app');
 
 class RegPage extends Block {
     static componentName = 'RegPage';
 
     constructor() {
         super({
-            onClick: () => new Router('#app').go('/auth'),
+            onClick: () => router.go('/auth'),
             onSubmit: (e: SubmitEvent) => {
                 e.preventDefault();
 
@@ -31,12 +34,14 @@ class RegPage extends Block {
 
                 if (isValid) {
                     console.log(data);
+                    // this.props.store.dispatch(AuthApi.create, data);
                 }
             },
         });
     }
 
     render() {
+        console.log(this.props);
         // language=hbs
         return `
             <main class="main">
