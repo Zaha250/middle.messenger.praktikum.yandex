@@ -1,3 +1,5 @@
+import queryStringify from "../helpers/queryStringify";
+
 enum METHODS {
     GET = 'GET',
     POST = 'POST',
@@ -15,13 +17,6 @@ export type TRequestOptions = {
     data?: unknown
     withCredentials?: boolean
 };
-
-function queryStringify(data: TRequestData) {
-    if (!data) return '';
-    return Object.entries(data).reduce((acc, [key, value], index, arr) => {
-        return `${acc}${key}=${value}${index < arr.length - 1 ? '&' : ''}`;
-    }, '?');
-}
 
 class HTTP {
     private readonly _parentPath: string;

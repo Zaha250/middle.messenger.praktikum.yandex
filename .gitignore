@@ -3,3 +3,5 @@ dist
 .idea
 .github
 .parcel-cache
+
+.env
