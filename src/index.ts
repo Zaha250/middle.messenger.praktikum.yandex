@@ -6,7 +6,7 @@ import Messenger from './pages/messenger';
 import ProfilePage from './pages/profile';
 import RegPage from './pages/reg';
 import NotFoundPage from './pages/404';
-import { Store, rootState, StoreEvents } from './store';
+import { store } from './store';
 import './styles/index.scss';
 
 Object.values(components).forEach((Component: BlockConstructable) => {
@@ -15,22 +15,20 @@ Object.values(components).forEach((Component: BlockConstructable) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const router = new Router('#app');
-    const store = new Store(rootState);
 
-    store.on(StoreEvents.Updated, (prevState, nextState) => {
+    store.on('changed', (prevState, nextState) => {
         if (prevState.page !== nextState.page) {
+            console.log('change page');
             const Page = nextState.page;
             renderDOM('#app', new Page({}));
         }
     });
 
-    console.log(store);
-
     router
-        .use('/', Messenger)
-        .use('/auth', AuthPage)
-        .use('/reg', RegPage)
-        .use('/profile', ProfilePage)
+        .use('/', AuthPage)
+        .use('/messenger', Messenger)
+        .use('/sign-up', RegPage)
+        .use('/settings', ProfilePage)
         .use('*', NotFoundPage)
         .start();
 

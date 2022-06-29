@@ -1,6 +1,6 @@
 type StringIndexed = Record<string, any>;
 
-export default function queryStringify (initialObj: StringIndexed): string | never {
+export default function queryStringify(initialObj: StringIndexed): string | never {
     const reducer = (obj: StringIndexed, parentPrefix = null) => (prev: any, key: any) => {
         const val = obj[key];
         key = encodeURIComponent(key);

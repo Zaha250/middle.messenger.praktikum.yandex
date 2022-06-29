@@ -18,7 +18,7 @@ type LoginRequestDataType = {
 };
 
 export const AuthApi = {
-    create: (data: CreateUserType) => AuthApiInstance.post<User>('/signup', data),
+    create: (data: CreateUserType) => AuthApiInstance.post<string>('/signup', data),
     login: (data: LoginRequestDataType) => AuthApiInstance.post<string | APIError>('/signin', data),
     logout: () => AuthApiInstance.post<string | APIError>('/logout'),
     me: () => AuthApiInstance.get<UserDTO | APIError>('/user'),

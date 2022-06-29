@@ -14,14 +14,16 @@ export async function initApp(dispatch: Dispatch<RootStateType>) {
 
         dispatch({
             user: {
-                id: response.id,
-                login: response.login,
-                firstName: response.first_name,
-                secondName: response.second_name,
-                displayName: response.display_name,
-                avatar: response.avatar,
-                email: response.email,
-                phone: response.phone,
+                profile: {
+                    id: response.id,
+                    login: response.login,
+                    firstName: response.first_name,
+                    secondName: response.second_name,
+                    displayName: response.display_name,
+                    avatar: response.avatar,
+                    email: response.email,
+                    phone: response.phone,
+                },
             },
         });
     } catch (err) {

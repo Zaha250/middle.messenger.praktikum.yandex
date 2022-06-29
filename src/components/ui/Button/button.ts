@@ -13,7 +13,7 @@ export class Button extends Block {
     static componentName = 'Button';
 
     constructor({
-        type = 'text', variant = 'primary', onClick, ...props 
+        type = 'button', variant = 'primary', onClick, ...props
     }: IButtonProps) {
         super({
             ...props,

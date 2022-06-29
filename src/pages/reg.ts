@@ -1,16 +1,23 @@
 import { Block, Router } from 'core';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
+import { connect, RootStateType, store } from '../store';
+import { UserStateType } from '../store/user/initialState';
+import { createUser } from '../services/AuthService';
 import '../styles/pages/auth.scss';
-import { AuthApi } from 'api/authApi';
 
 const router = new Router('#app');
+
+interface IRegPageProps {
+    user: UserStateType
+}
 
 class RegPage extends Block {
     static componentName = 'RegPage';
 
-    constructor() {
+    constructor(props: IRegPageProps) {
         super({
-            onClick: () => router.go('/auth'),
+            ...props,
+            onClick: () => router.go('/'),
             onSubmit: (e: SubmitEvent) => {
                 e.preventDefault();
 
@@ -34,14 +41,25 @@ class RegPage extends Block {
 
                 if (isValid) {
                     console.log(data);
-                    // this.props.store.dispatch(AuthApi.create, data);
+                    store.dispatch(createUser, data);
                 }
             },
         });
     }
 
+    componentDidMount() {
+        if (this.props.user) {
+            router.go('/messenger');
+        }
+    }
+
+    /* protected getStateFromProps() {
+        this.state = {
+            userState: this.props.user,
+        };
+    } */
+
     render() {
-        console.log(this.props);
         // language=hbs
         return `
             <main class="main">
@@ -125,4 +143,10 @@ class RegPage extends Block {
     }
 }
 
-export default RegPage;
+function mapUserToProps(state: RootStateType) {
+    return {
+        user: state.user.profile,
+    };
+}
+
+export default connect(mapUserToProps)(RegPage);

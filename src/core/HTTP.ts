@@ -1,4 +1,4 @@
-import queryStringify from "../helpers/queryStringify";
+import queryStringify from '../helpers/queryStringify';
 
 enum METHODS {
     GET = 'GET',
@@ -54,7 +54,7 @@ class HTTP {
             withCredentials = false,
         } = options;
 
-        const query = method === METHODS.GET ? queryStringify(data as TRequestData) : '';
+        const query = data ? queryStringify(data as TRequestData) : '';
 
         return new Promise((resolve, reject) => {
             const xhr = new window.XMLHttpRequest();

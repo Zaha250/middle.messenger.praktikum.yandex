@@ -1,4 +1,5 @@
 import EventBus from '../core/EventBus';
+import rootState from './rootState';
 
 export type Dispatch<State> = (
     nextStateOrAction: Partial<State> | Action<State>,
@@ -10,10 +11,6 @@ export type Action<State> = (
     state: State,
     payload: any,
 ) => void;
-
-export enum StoreEvents {
-    Updated = 'updated',
-}
 
 class Store<State extends Record<string, any>> extends EventBus {
     private state: State = {} as State;
@@ -33,8 +30,8 @@ class Store<State extends Record<string, any>> extends EventBus {
         const prevState = { ...this.state };
 
         this.state = { ...this.state, ...nextState };
-        console.log(this.state);
-        this.emit(StoreEvents.Updated, prevState, nextState);
+
+        this.emit('changed', prevState, nextState);
     }
 
     dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any) {
@@ -46,4 +43,4 @@ class Store<State extends Record<string, any>> extends EventBus {
     }
 }
 
-export default Store;
+export default new Store(rootState);

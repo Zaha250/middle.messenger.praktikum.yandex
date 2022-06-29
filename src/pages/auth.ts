@@ -36,7 +36,7 @@ class AuthPage extends Block {
                     }
                 },
             },
-            onClick: () => new Router('#app').go('/reg'),
+            onClick: () => new Router('#app').go('/sign-up'),
         });
     }
 

@@ -1,8 +1,16 @@
-import { Block } from 'core';
+import { Block, Router } from 'core';
 import '../styles/pages/errorPage.scss';
+
+const router = new Router('#app');
 
 class NotFoundPage extends Block {
     static componentName = 'NotFoundPage';
+
+    constructor() {
+        super({
+            onClick: () => router.go('/messenger'),
+        });
+    }
 
     render() {
         // language=hbs
@@ -10,7 +18,7 @@ class NotFoundPage extends Block {
             <main class="main">
                 <h1 class="title">404</h1>
                 <p class="desc">Не туда попали</p>
-                <a href="index.hbs" class="link">Назад к чатам</a>
+                {{{ Button text="Назад к чатам" variant="transparent" onClick=onClick }}}
             </main>
         `;
     }

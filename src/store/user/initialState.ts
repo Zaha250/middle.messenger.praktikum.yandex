@@ -1,20 +1,11 @@
 const initialState: UserStateType = {
     isLoad: false,
-    profile: {
-        id: '',
-        login: '',
-        firstName: '',
-        secondName: '',
-        displayName: '',
-        avatar: '',
-        email: '',
-        phone: '',
-    },
+    profile: null,
 };
 
-type UserStateType = {
+export type UserStateType = {
     isLoad: boolean;
-    profile: User;
+    profile: Nullable<User>;
 };
 
 export default initialState;

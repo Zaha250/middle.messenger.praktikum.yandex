@@ -1,8 +1,16 @@
-import { Block } from 'core';
+import { Block, Router } from 'core';
 import '../styles/pages/errorPage.scss';
+
+const router = new Router('#app');
 
 class ServerErrorPage extends Block {
     static componentName = 'ServerErrorPage';
+
+    constructor() {
+        super({
+            onClick: () => router.go('/messenger'),
+        });
+    }
 
     render() {
         // language=hbs
@@ -10,7 +18,7 @@ class ServerErrorPage extends Block {
             <main class="main">
                 <h1 class="title">500</h1>
                 <p class="desc">Уже исправляем</p>
-                <a href="index.hbs" class="link">Назад к чатам</a>
+                {{{ Button text="Назад к чатам" variant="transparent" onClick=onClick }}}
             </main>
         `;
     }
