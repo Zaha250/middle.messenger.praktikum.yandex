@@ -17,34 +17,41 @@ class RegPage extends Block {
     constructor(props: IRegPageProps) {
         super({
             ...props,
-            onClick: () => router.go('/'),
-            onSubmit: (e: SubmitEvent) => {
-                e.preventDefault();
+            events: {
+                submit: (e: SubmitEvent) => {
+                    e.preventDefault();
 
-                const inputs = this.element?.querySelectorAll('input');
-                let isValid = true;
-                const data: Record<string, string> = {};
+                    const inputs = this.element?.querySelectorAll('input');
+                    let isValid = true;
+                    const data: Record<string, string | number> = {};
 
-                if (inputs) {
-                    inputs.forEach((input) => {
-                        const { value, name } = input as HTMLInputElement;
-                        const errorMessage = validationField(ValidationRuleEnum[name as keyof typeof ValidationRuleEnum], value);
+                    if (inputs) {
+                        inputs.forEach((input) => {
+                            const { value, name, id } = input as HTMLInputElement;
+                            const errorMessage = validationField(ValidationRuleEnum[id as keyof typeof ValidationRuleEnum], value);
 
-                        if (errorMessage) {
-                            isValid = false;
-                            this.refs[name].refs.error.setProps({ text: errorMessage });
-                        } else {
-                            data[name] = value;
-                        }
-                    });
-                }
+                            if (errorMessage) {
+                                isValid = false;
+                                this.refs[name].refs.error.setProps({ text: errorMessage });
+                            } else {
+                                if (name) {
+                                    data[name] = value;
+                                }
+                            }
+                        });
+                    }
 
-                if (isValid) {
-                    console.log(data);
-                    store.dispatch(createUser, data);
-                }
+                    if (isValid) {
+                        console.log(data);
+                        store.dispatch(createUser, data);
+                    }
+                },
             },
         });
+
+        this.setProps({
+            navigateToLogin: () => router.go('/')
+        })
     }
 
     componentDidMount() {
@@ -68,8 +75,9 @@ class RegPage extends Block {
                         <h2 class="form__title">Регистрация</h2>
                         <div class="form-fields">
                             {{{ ControlledInput 
-                                name="Email" 
-                                ref="Email" 
+                                id="Email" 
+                                name="email" 
+                                ref="email" 
                                 placeholder="Почта"
                                 validationRule="${ValidationRuleEnum.Email}"
                                 classes="form__input"
@@ -77,8 +85,9 @@ class RegPage extends Block {
                                 onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
-                                name="Login" 
-                                ref="Login" 
+                                id="Login" 
+                                name="login" 
+                                ref="login" 
                                 placeholder="Логин"
                                 validationRule="${ValidationRuleEnum.Login}"
                                 classes="form__input" 
@@ -86,8 +95,9 @@ class RegPage extends Block {
                                 onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
-                                name="FirstName" 
-                                ref="FirstName" 
+                                id="FirstName" 
+                                name="first_name" 
+                                ref="first_name" 
                                 placeholder="Имя"
                                 validationRule="${ValidationRuleEnum.FirstName}"
                                 classes="form__input" 
@@ -95,8 +105,9 @@ class RegPage extends Block {
                                 onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
-                                name="SecondName" 
-                                ref="SecondName" 
+                                id="SecondName" 
+                                name="second_name" 
+                                ref="second_name" 
                                 placeholder="Фамилия"
                                 validationRule="${ValidationRuleEnum.SecondName}"
                                 classes="form__input" 
@@ -105,8 +116,9 @@ class RegPage extends Block {
                             }}}
                             {{{ ControlledInput 
                                 type="phone" 
-                                name="Phone" 
-                                ref="Phone" 
+                                id="Phone" 
+                                name="phone" 
+                                ref="phone" 
                                 placeholder="Телефон"
                                 validationRule="${ValidationRuleEnum.Phone}"
                                 classes="form__input" 
@@ -115,8 +127,9 @@ class RegPage extends Block {
                             }}}
                             {{{ ControlledInput 
                                 type="password" 
-                                name="Password" 
-                                ref="Password" 
+                                id="Password" 
+                                name="password" 
+                                ref="password" 
                                 placeholder="Пароль"
                                 validationRule="${ValidationRuleEnum.Password}"
                                 classes="form__input" 
@@ -125,7 +138,6 @@ class RegPage extends Block {
                             }}}
                             {{{ ControlledInput 
                                 type="password" 
-                                name="Password" 
                                 placeholder="Пароль (ещё раз)" 
                                 classes="form__input" 
                                 onChange=onChange
@@ -133,9 +145,17 @@ class RegPage extends Block {
                             }}}
                         </div>
                     </div>
+                    {{#if error}}
+                        {{{Error text=error}}}
+                    {{/if}}
                     <div class="form-footer">
-                        {{{ Button type="submit" classes="form__btn" text="Зарегистрироваться" onClick=onSubmit}}}
-                        {{{ Button text="Войти" variant="transparent" onClick=onClick }}}
+                        {{{ Button 
+                                type="submit" 
+                                classes="form__btn" 
+                                text="Зарегистрироваться" 
+                                isLoad=isLoad
+                        }}}
+                        {{{ Button text="Войти" variant="transparent" onClick=navigateToLogin }}}
                     </div>
                 </form>
             </main>
@@ -146,6 +166,8 @@ class RegPage extends Block {
 function mapUserToProps(state: RootStateType) {
     return {
         user: state.user.profile,
+        isLoad: state.user.isLoad,
+        error: state.user.error,
     };
 }
 

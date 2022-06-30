@@ -6,6 +6,8 @@ interface IButtonProps {
     type?: string;
     variant?: string;
     classes?: string;
+    spinnerClasses?: string;
+    isLoad?: boolean;
     onClick: () => void;
 }
 
@@ -28,7 +30,12 @@ export class Button extends Block {
     render() {
         // language=hbs
         return `
-            <button class="btn {{variant}} {{classes}}" type="{{type}}">{{text}}</button>
+            <button class="btn {{variant}} {{classes}}" type="{{type}}">
+                {{text}}
+                {{#if isLoad}}
+                    {{{Spinner}}}
+                {{/if}}
+            </button>
         `;
     }
 }

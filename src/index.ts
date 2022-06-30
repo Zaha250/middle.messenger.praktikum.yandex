@@ -32,5 +32,5 @@ document.addEventListener('DOMContentLoaded', () => {
         .use('*', NotFoundPage)
         .start();
 
-    // store.dispatch(initApp);
+    store.dispatch(initApp);
 });

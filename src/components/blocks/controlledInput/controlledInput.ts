@@ -32,6 +32,7 @@ export class ControlledInput extends Block {
             <div class="controlled-input {{wrapperClasses}}">
                 <div class="label">{{label}}</div>
                 {{{Input 
+                    id=id 
                     name=name 
                     type=type
                     placeholder=placeholder 

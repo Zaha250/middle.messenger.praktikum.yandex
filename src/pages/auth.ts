@@ -1,8 +1,12 @@
 import { Block, Router } from 'core';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
+import {connect, RootStateType, store} from "../store";
+import {login} from "services/AuthService";
 import '../styles/pages/auth.scss';
 
 interface IAuthPageProps {}
+
+const router = new Router('#app');
 
 class AuthPage extends Block {
     static componentName = 'AuthPage';
@@ -19,8 +23,8 @@ class AuthPage extends Block {
 
                     if (inputs) {
                         inputs.forEach((input) => {
-                            const { value, name } = input as HTMLInputElement;
-                            const errorMessage = validationField(ValidationRuleEnum[name as keyof typeof ValidationRuleEnum], value);
+                            const { value, name, id } = input as HTMLInputElement;
+                            const errorMessage = validationField(ValidationRuleEnum[id as keyof typeof ValidationRuleEnum], value);
 
                             if (errorMessage) {
                                 isValid = false;
@@ -32,12 +36,23 @@ class AuthPage extends Block {
                     }
 
                     if (isValid) {
-                        console.log(data);
+                        store.dispatch(login, data);
                     }
                 },
-            },
-            onClick: () => new Router('#app').go('/sign-up'),
+            }
         });
+
+        this.setProps({
+            onClick: () => router.go('/sign-up')
+        })
+    }
+
+    componentDidMount() {
+        console.log(this.props)
+        if (this.props.user) {
+            console.log(2)
+            router.go('/messenger');
+        }
     }
 
     render() {
@@ -49,24 +64,32 @@ class AuthPage extends Block {
                         <h2 class="form__title">Вход</h2>
                         <div class="form-fields">
                             {{{ControlledInput 
-                                name="Login"
-                                ref="Login"
+                                id="Login"
+                                name="login"
+                                ref="login"
                                 validationRule="${ValidationRuleEnum.Login}"
                                 placeholder="Логин" 
                                 classes="form__input"
                             }}}
                             {{{ControlledInput 
                                 type="password" 
-                                ref="Password"
+                                id="Password" 
+                                name="password" 
+                                ref="password"
                                 validationRule="${ValidationRuleEnum.Password}"
-                                name="Password" 
                                 placeholder="Пароль" 
                                 classes="form__input"
                             }}}
                         </div>
                     </div>
+                    {{{Error text=error}}}
                     <div class="form-footer">
-                        {{{ Button type="submit" text="Авторизоваться" classes="form__btn" }}}
+                        {{{ Button
+                                type="submit"
+                                classes="form__btn"
+                                text="Авторизоваться"
+                                isLoad=isLoad
+                        }}}
                         {{{ Button text="Нет аккаунта?" variant="transparent" classes="form__btn" onClick=onClick }}}
                     </div>
                 </form>
@@ -75,4 +98,12 @@ class AuthPage extends Block {
     }
 }
 
-export default AuthPage;
+function mapUserToProps(state: RootStateType) {
+    return {
+        user: state.user.profile,
+        isLoad: state.user.isLoad,
+        error: state.user.error,
+    };
+}
+
+export default connect(mapUserToProps)(AuthPage);

@@ -1,5 +1,6 @@
 import { HTTP } from '../core';
 import { APIError, UserDTO } from './types';
+import {TRequestOptions} from "../core/HTTP";
 
 const AuthApiInstance = new HTTP('/auth');
 
@@ -17,9 +18,20 @@ type LoginRequestDataType = {
     password: string;
 };
 
+const options: TRequestOptions = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true
+}
+
 export const AuthApi = {
-    create: (data: CreateUserType) => AuthApiInstance.post<string>('/signup', data),
-    login: (data: LoginRequestDataType) => AuthApiInstance.post<string | APIError>('/signin', data),
-    logout: () => AuthApiInstance.post<string | APIError>('/logout'),
-    me: () => AuthApiInstance.get<UserDTO | APIError>('/user'),
+    create: (data: CreateUserType) => AuthApiInstance.post<{id: number} | APIError>(
+        '/signup',
+    {data: JSON.stringify(data), ...options}
+    ),
+    login: (data: LoginRequestDataType) => AuthApiInstance.post<string | APIError>(
+        '/signin',
+        {data: JSON.stringify(data), ...options}
+    ),
+    logout: () => AuthApiInstance.post<string | APIError>('/logout', {...options}),
+    me: () => AuthApiInstance.get<UserDTO | APIError>('/user', {...options}),
 };

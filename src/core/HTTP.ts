@@ -25,23 +25,23 @@ class HTTP {
         this._parentPath = process.env.BASE_URL + _parentPath;
     }
 
-    public get = <R>(url: string, options = {}): Promise<R> => {
+    public get = <R>(url: string, options: TRequestOptions = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.GET });
     };
 
-    public post = <R>(url: string, options = {}): Promise<R> => {
+    public post = <R>(url: string, options: TRequestOptions = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.POST });
     };
 
-    public put = <R>(url: string, options = {}): Promise<R> => {
+    public put = <R>(url: string, options: TRequestOptions = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.PUT });
     };
 
-    public patch = <R>(url: string, options = {}): Promise<R> => {
+    public patch = <R>(url: string, options: TRequestOptions = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.PATCH });
     };
 
-    public delete = <R>(url: string, options = {}): Promise<R> => {
+    public delete = <R>(url: string, options: TRequestOptions = {}): Promise<R> => {
         return this.request(url, { ...options, method: METHODS.DELETE });
     };
 
@@ -54,7 +54,7 @@ class HTTP {
             withCredentials = false,
         } = options;
 
-        const query = data ? queryStringify(data as TRequestData) : '';
+        const query = method === METHODS.GET ? queryStringify(data as TRequestData) : '';
 
         return new Promise((resolve, reject) => {
             const xhr = new window.XMLHttpRequest();
@@ -70,17 +70,13 @@ class HTTP {
             });
 
             xhr.onload = () => {
-                if (xhr.status >= 300) {
-                    reject(xhr);
-                } else {
-                    resolve(xhr);
-                }
+                resolve(xhr);
             };
 
-            xhr.onabort = () => reject(xhr);
-            xhr.onerror = () => reject(xhr);
+            xhr.onabort = reject;
+            xhr.onerror = reject;
             xhr.timeout = timeout;
-            xhr.ontimeout = () => reject(xhr);
+            xhr.ontimeout = reject;
 
             if (method === METHODS.GET || !data) {
                 xhr.send();

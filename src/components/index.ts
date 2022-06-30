@@ -4,6 +4,7 @@ export { default as Search } from './ui/Search';
 export { default as Chat } from './ui/Chat';
 export { default as Error } from './ui/Error';
 export { default as Button } from './ui/Button';
+export { default as Spinner } from './ui/Spinner';
 export { default as Message } from './ui/Message';
 export { default as ChatList } from './blocks/chatList';
 export { default as ControlledInput } from './blocks/controlledInput';
