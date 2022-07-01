@@ -1,5 +1,6 @@
 import EventBus from '../core/EventBus';
 import rootState from './rootState';
+import deepMerge from "../helpers/deepMerge";
 
 export type Dispatch<State> = (
     nextStateOrAction: Partial<State> | Action<State>,
@@ -38,7 +39,8 @@ class Store<State extends Record<string, any>> extends EventBus {
         if (typeof nextStateOrAction === 'function') {
             nextStateOrAction(this.dispatch.bind(this), this.state, payload);
         } else {
-            this.set({ ...this.state, ...nextStateOrAction });
+            const newState = deepMerge(this.state, nextStateOrAction)
+            this.set({ ...newState });
         }
     }
 }

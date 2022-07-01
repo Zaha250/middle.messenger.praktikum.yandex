@@ -1,12 +1,18 @@
-import { Block, Router } from 'core';
+import { Block } from 'core';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
-import {connect, RootStateType, store} from "../store";
+import {RootStateType, store} from "../store";
+import {connect, withRouter} from 'HOC';
 import {login} from "services/AuthService";
+import {UserStateType} from "../store/user/initialState";
+import Router from "../core/Router";
 import '../styles/pages/auth.scss';
 
-interface IAuthPageProps {}
-
-const router = new Router('#app');
+interface IAuthPageProps {
+    user: UserStateType;
+    error: Nullable<string>;
+    isLoad: boolean;
+    router: typeof Router;
+}
 
 class AuthPage extends Block {
     static componentName = 'AuthPage';
@@ -43,15 +49,13 @@ class AuthPage extends Block {
         });
 
         this.setProps({
-            onClick: () => router.go('/sign-up')
+            onClick: () => this.props.router.go('/sign-up')
         })
     }
 
     componentDidMount() {
-        console.log(this.props)
         if (this.props.user) {
-            console.log(2)
-            router.go('/messenger');
+            this.props.router.go('/messenger');
         }
     }
 
@@ -106,4 +110,4 @@ function mapUserToProps(state: RootStateType) {
     };
 }
 
-export default connect(mapUserToProps)(AuthPage);
+export default withRouter(connect(mapUserToProps)(AuthPage));

@@ -5,13 +5,21 @@ interface IAvatarProps {
     wrapperClasses?: string;
     photo?: string;
     name?: string;
+    onClick?: () => void;
 }
 
 export class Avatar extends Block {
     static componentName = 'Avatar';
 
-    constructor({ wrapperClasses, photo, name }: IAvatarProps) {
-        super({ wrapperClasses, photo, name });
+    constructor({ wrapperClasses, photo, name, onClick }: IAvatarProps) {
+        super({
+            wrapperClasses,
+            photo,
+            name,
+            events: {
+                click: onClick,
+            }
+        });
     }
 
     render() {

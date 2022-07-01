@@ -1,7 +1,5 @@
-import { Block, Router } from 'core';
+import { Block, router } from 'core';
 import '../styles/pages/errorPage.scss';
-
-const router = new Router('#app');
 
 class ServerErrorPage extends Block {
     static componentName = 'ServerErrorPage';

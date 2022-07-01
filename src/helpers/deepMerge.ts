@@ -2,7 +2,7 @@ type Indexed<T = any> = {
     [key in string]: T;
 };
 
-export default function merge(target: Indexed, source: Indexed): Indexed {
+export default function deepMerge(target: Indexed, source: Indexed): Indexed {
     const isObject = (obj: any) => obj && typeof obj === 'object';
 
     if (!isObject(target) || !isObject(source)) {
@@ -16,7 +16,7 @@ export default function merge(target: Indexed, source: Indexed): Indexed {
         if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
             target[key] = targetValue.concat(sourceValue);
         } else if (isObject(targetValue) && isObject(sourceValue)) {
-            target[key] = merge(Object.assign({}, targetValue), sourceValue);
+            target[key] = deepMerge(Object.assign({}, targetValue), sourceValue);
         } else {
             target[key] = sourceValue;
         }

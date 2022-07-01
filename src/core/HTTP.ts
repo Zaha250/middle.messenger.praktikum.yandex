@@ -69,8 +69,10 @@ class HTTP {
                 xhr.setRequestHeader(key, value);
             });
 
+            xhr.responseType = 'json';
+
             xhr.onload = () => {
-                resolve(xhr);
+                resolve(xhr.response);
             };
 
             xhr.onabort = reject;

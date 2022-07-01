@@ -1,17 +1,26 @@
-import { Block } from 'core';
+import {Block, router} from 'core';
 import './chatList.scss';
 
 export class ChatList extends Block {
     static componentName = 'ChatList';
+
+    constructor() {
+        super();
+        this.setProps({
+            navigateToSettings: () => this.navigateToSettings()
+        })
+    }
+
+    navigateToSettings = () => {
+        router.go('/settings');
+    }
 
     render() {
         // language=hbs
         return `
             <aside class="chatList">
                 <div class="chatList-header">
-                    <a href="./profile.hbs">
-                        {{{ Avatar wrapperClasses="chatList-header__avatar" name="Александр" }}}
-                    </a>
+                    {{{ Avatar wrapperClasses="chatList-header__avatar" name="Александр" onClick=navigateToSettings }}}
                     {{{ Search classes="chatList__search" }}}
                 </div>
                 <div class="dialogs-body">

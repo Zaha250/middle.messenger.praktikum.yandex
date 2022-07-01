@@ -26,8 +26,8 @@ class Router {
 
     private routes: any[];
 
-    use(pathname: string, block: typeof Block) {
-        const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+    use(pathname: string, block: typeof Block, props = {}) {
+        const route = new Route(pathname, block, {rootQuery: this._rootQuery, ...props});
         this.routes.push(route);
 
         return this;
@@ -75,4 +75,4 @@ class Router {
     }
 }
 
-export default Router;
+export default new Router('#app');

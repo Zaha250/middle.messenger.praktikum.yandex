@@ -1,9 +1,8 @@
-import { AuthApi, CreateUserType } from '../api/authApi';
-import { Dispatch, RootStateType } from '../store';
+import { AuthApi, CreateUserType } from 'api/authApi';
+import { Dispatch, RootStateType } from 'store';
 import { hasApiError } from '../helpers/hasApiError';
-import { Router } from '../core';
-
-const router = new Router('#app');
+import {initApp} from "./InitApp";
+import router from "core/Router";
 
 export async function createUser(dispatch: Dispatch<RootStateType>, state: RootStateType, data: CreateUserType) {
     dispatch({
@@ -42,6 +41,27 @@ export async function login(dispatch: Dispatch<RootStateType>, state: RootStateT
         dispatch({
             user: { isLoad: true }
         });
+        const response = await AuthApi.login(data);
+        console.log(response)
+
+        if (hasApiError(response)) {
+            dispatch({
+                user: { error: response.reason, isLoad: false }
+            });
+            return;
+        }
+
+        dispatch(initApp);
+        router.go('/messenger');
+    } catch (e) {
+        dispatch({
+            user: { error: e }
+        });
+    }
+}
+
+export async function logout(dispatch: Dispatch<RootStateType>, state: RootStateType) {
+    try {
         const response = await AuthApi.logout();
         console.log(response)
 
@@ -52,16 +72,14 @@ export async function login(dispatch: Dispatch<RootStateType>, state: RootStateT
             return;
         }
 
-        // router.go('/messenger');
+        dispatch({
+            user: { profile: null, isLoad: false }
+        });
+
+        router.go('/');
     } catch (e) {
         dispatch({
-            user: { error: e }
-        });
-    } finally {
-        dispatch({
-            user: {
-                isLoad: false
-            },
+            user: { error: e, isLoad: false }
         });
     }
 }

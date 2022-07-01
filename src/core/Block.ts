@@ -75,11 +75,12 @@ export default class Block<P = any> {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props);
     }
 
-    _componentDidMount() {
-        this.componentDidMount();
+    _componentDidMount(props: P) {
+        this.componentDidMount(props);
     }
 
-    componentDidMount() {}
+    // @ts-expect-error
+    componentDidMount(props: P) {}
 
     _componentDidUpdate(oldProps: P, newProps: P) {
         const response = this.componentDidUpdate(oldProps, newProps);
@@ -92,6 +93,13 @@ export default class Block<P = any> {
     componentDidUpdate(oldProps: P, newProps: P) {
         return oldProps !== newProps;
     }
+
+    _componentWillUnmount() {
+        this.eventBus().destroy();
+        this.componentWillUnmount();
+    }
+
+    componentWillUnmount() {}
 
     setProps = (nextProps: P) => {
         if (!nextProps) {

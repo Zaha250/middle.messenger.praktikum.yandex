@@ -7,32 +7,29 @@ export async function initApp(dispatch: Dispatch<RootStateType>) {
 
     try {
         const response = await AuthApi.me();
-        console.log(response)
-        const data = JSON.parse(response.response);
-        console.log(data)
 
         if (hasApiError(response)) {
+            dispatch({ user: { isLoad: false } });
             return;
         }
 
         dispatch({
             user: {
                 profile: {
-                    id: data.id,
-                    login: data.login,
-                    firstName: data.first_name,
-                    secondName: data.second_name,
-                    displayName: data.display_name,
-                    avatar: data.avatar,
-                    email: data.email,
-                    phone: data.phone,
+                    id: response.id,
+                    login: response.login,
+                    firstName: response.first_name,
+                    secondName: response.second_name,
+                    displayName: response.display_name,
+                    avatar: response.avatar,
+                    email: response.email,
+                    phone: response.phone,
                 },
                 isLoad: false
             },
         });
     } catch (err) {
         console.error(err);
-    } finally {
-        // dispatch({ user: { isLoad: false } });
+        dispatch({ user: { isLoad: false, error: err } });
     }
 }

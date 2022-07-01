@@ -1,5 +1,5 @@
 import * as components from 'components';
-import { BlockConstructable, registerComponent, renderDOM, Router } from 'core';
+import { BlockConstructable, registerComponent, router } from 'core';
 import { initApp } from 'services/InitApp';
 import AuthPage from 'pages/auth';
 import Messenger from './pages/messenger';
@@ -14,14 +14,12 @@ Object.values(components).forEach((Component: BlockConstructable) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const router = new Router('#app');
-
     store.on('changed', (prevState, nextState) => {
-        if (prevState.page !== nextState.page) {
-            console.log('change page');
-            const Page = nextState.page;
-            renderDOM('#app', new Page({}));
-        }
+        console.log(
+            '%cstore updated',
+            'background: #222; color: #bada55',
+            nextState,
+        );
     });
 
     router

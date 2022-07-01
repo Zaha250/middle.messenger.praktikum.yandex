@@ -1,11 +1,10 @@
-import { Block, Router } from 'core';
+import { Block } from 'core';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
-import { connect, RootStateType, store } from '../store';
+import { RootStateType, store } from '../store';
+import {connect, withRouter} from 'HOC';
 import { UserStateType } from '../store/user/initialState';
 import { createUser } from '../services/AuthService';
 import '../styles/pages/auth.scss';
-
-const router = new Router('#app');
 
 interface IRegPageProps {
     user: UserStateType
@@ -50,14 +49,8 @@ class RegPage extends Block {
         });
 
         this.setProps({
-            navigateToLogin: () => router.go('/')
+            navigateToLogin: () => this.props.router.go('/')
         })
-    }
-
-    componentDidMount() {
-        if (this.props.user) {
-            router.go('/messenger');
-        }
     }
 
     /* protected getStateFromProps() {
@@ -81,8 +74,6 @@ class RegPage extends Block {
                                 placeholder="Почта"
                                 validationRule="${ValidationRuleEnum.Email}"
                                 classes="form__input"
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
                                 id="Login" 
@@ -91,8 +82,6 @@ class RegPage extends Block {
                                 placeholder="Логин"
                                 validationRule="${ValidationRuleEnum.Login}"
                                 classes="form__input" 
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
                                 id="FirstName" 
@@ -101,8 +90,6 @@ class RegPage extends Block {
                                 placeholder="Имя"
                                 validationRule="${ValidationRuleEnum.FirstName}"
                                 classes="form__input" 
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
                                 id="SecondName" 
@@ -111,8 +98,6 @@ class RegPage extends Block {
                                 placeholder="Фамилия"
                                 validationRule="${ValidationRuleEnum.SecondName}"
                                 classes="form__input" 
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
                                 type="phone" 
@@ -122,8 +107,6 @@ class RegPage extends Block {
                                 placeholder="Телефон"
                                 validationRule="${ValidationRuleEnum.Phone}"
                                 classes="form__input" 
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
                                 type="password" 
@@ -133,21 +116,15 @@ class RegPage extends Block {
                                 placeholder="Пароль"
                                 validationRule="${ValidationRuleEnum.Password}"
                                 classes="form__input" 
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                             {{{ ControlledInput 
                                 type="password" 
                                 placeholder="Пароль (ещё раз)" 
                                 classes="form__input" 
-                                onChange=onChange
-                                onFocus=onFocus
                             }}}
                         </div>
                     </div>
-                    {{#if error}}
-                        {{{Error text=error}}}
-                    {{/if}}
+                    {{{Error text=error}}}
                     <div class="form-footer">
                         {{{ Button 
                                 type="submit" 
@@ -171,4 +148,4 @@ function mapUserToProps(state: RootStateType) {
     };
 }
 
-export default connect(mapUserToProps)(RegPage);
+export default withRouter(connect(mapUserToProps)(RegPage));

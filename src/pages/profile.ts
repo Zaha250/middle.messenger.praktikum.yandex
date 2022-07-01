@@ -1,8 +1,15 @@
 import { Block } from 'core';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
+import {RootStateType, store} from "../store";
+import {connect, withRouter} from 'HOC';
+import {logout} from "services/AuthService";
+import Router from "core/Router";
+import {changeProfile} from "../services/UserService";
 import '../styles/pages/profile.scss';
 
-interface IProfilePageProps {}
+interface IProfilePageProps {
+    router: typeof Router
+}
 
 class ProfilePage extends Block {
     static componentName = 'ProfilePage';
@@ -19,8 +26,8 @@ class ProfilePage extends Block {
 
                 if (inputs.length) {
                     inputs.forEach((input) => {
-                        const { value, name } = input as HTMLInputElement;
-                        const errorMessage = validationField(ValidationRuleEnum[name as keyof typeof ValidationRuleEnum], value);
+                        const { value, name, id } = input as HTMLInputElement;
+                        const errorMessage = validationField(ValidationRuleEnum[id as keyof typeof ValidationRuleEnum], value);
 
                         if (errorMessage) {
                             isValid = false;
@@ -32,93 +39,127 @@ class ProfilePage extends Block {
                 }
 
                 if (isValid) {
-                    console.log(data);
+                    store.dispatch(changeProfile, data);
                 }
             },
+        });
+
+        this.setProps({
+            onLogout: () => this.onLogout(),
+            showChangePasswordModal: () => this.showChangePasswordModal()
+        })
+
+    }
+
+    onLogout = () => {
+        store.dispatch(logout);
+    }
+
+    showChangePasswordModal = () => {
+        store.dispatch({
+            changePassword: { show: true }
         });
     }
 
     render() {
+        const user = this.props.user
         // language=hbs
         return `
             <main class="profile">
                 <div class="profile-avatar">
-                    {{#if photo}}
-                        <img src="{{photo}}" alt="avatar">
+                    {{#if user.avatar}}
+                        <img src="{{user.avatar}}" alt="avatar">
                     {{else}}
                         <div class="profile-avatar__placeholder"></div>
                     {{/if}}
                     <input type="file" accept="image/*" value="" class="profile-avatar__input">
                 </div>
-                <h4 class="profile__name">Колтунов Александр</h4>
-                <form class="profile-form" id="profile-form" onsubmit="return false;">
+                <h4 class="profile__name">${user?.displayName || user?.firstName}</h4>
+                <form class="profile-form" id="profile-form">
                     <div class="profile-fields">
                         {{{ ControlledInput 
-                                name="Email" 
-                                ref="Email" 
-                                id="email" 
+                                name="email" 
+                                ref="email" 
+                                id="Email" 
                                 label="Почта" 
+                                value="${user?.email}"
                                 validationRule="${ValidationRuleEnum.Email}"
                                 classes="profile__input" 
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
-                                name="Login" 
-                                ref="Login" 
-                                id="login" 
-                                label="Логин" 
+                                name="login" 
+                                ref="login" 
+                                id="Login" 
+                                label="Логин"
+                                value="${user?.login}"
                                 validationRule="${ValidationRuleEnum.Login}"
                                 classes="profile__input" 
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
-                                name="FirstName" 
-                                ref="FirstName" 
-                                id="first_name" 
-                                label="Имя" 
+                                name="first_name" 
+                                ref="first_name" 
+                                id="FirstName" 
+                                label="Имя"
+                                value="${user?.firstName}"
                                 validationRule="${ValidationRuleEnum.FirstName}"
                                 classes="profile__input" 
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
-                                name="SecondName" 
-                                ref="SecondName" 
-                                id="second_name" 
-                                label="Фамилия" 
+                                name="second_name" 
+                                ref="second_name" 
+                                id="SecondName" 
+                                label="Фамилия"
+                                value="${user?.secondName}"
                                 validationRule="${ValidationRuleEnum.SecondName}"
                                 classes="profile__input" 
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
-                                name="DisplayName" 
-                                ref="DisplayName" 
-                                id="display_name" 
-                                label="Имя в чате" 
+                                name="display_name" 
+                                ref="display_name" 
+                                id="DisplayName" 
+                                label="Имя в чате"
+                                value="${user?.displayName || ''}"
                                 classes="profile__input" 
                                 wrapperClasses="profile__control"
                         }}}
                         {{{ ControlledInput 
                                 type="tel" 
-                                name="Phone" 
-                                ref="Phone" 
-                                id="phone" 
-                                label="Телефон" 
+                                name="phone" 
+                                ref="phone" 
+                                id="Phone" 
+                                label="Телефон"
+                                value="${user?.phone}"
                                 validationRule="${ValidationRuleEnum.Phone}"
                                 classes="profile__input" 
                                 wrapperClasses="profile__control"
                         }}}
                     </div>
+                    {{{Error text=error}}}
                     <div>
                         {{{ Button variant="line" text="Изменить данные" onClick=onSubmit }}}
-                        {{{ Button variant="line" text="Изменить пароль" }}}
-                        <a href="#" class="profile-form__btn profile-form__btn_danger">
-                            Выйти
-                        </a>
+                        {{{ Button variant="line" text="Изменить пароль" onClick=showChangePasswordModal }}}
+                        {{{ Button 
+                                variant="line" 
+                                classes="profile-form__btn profile-form__btn_danger" 
+                                text="Выйти" 
+                                onClick=onLogout 
+                        }}}
                     </div>
                 </form>
+                {{{ChangePasswordModal}}}
             </main>
         `;
     }
 }
 
-export default ProfilePage;
+function mapStateToProps(state: RootStateType) {
+    return {
+        user: state.user.profile
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(ProfilePage));
