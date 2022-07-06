@@ -1,10 +1,11 @@
 import { Block } from 'core';
 import { IInputProps } from 'components/ui/Input/input';
+import { validationField, ValidationRuleEnum } from 'helpers/validator';
 import './controlledInput.scss';
-import { validationField, ValidationRuleEnum } from '../../../helpers/validator';
 
 interface IControlledInputProps extends IInputProps {
     label?: string;
+    onChange?: () => void;
     validationRule?: ValidationRuleEnum;
 }
 
@@ -40,6 +41,7 @@ export class ControlledInput extends Block {
                     classes=classes 
                     onBlur=onBlur 
                     onFocus=onFocus
+                    onChange=onChange
                 }}}
                 {{{Error ref="error"}}}
             </div>

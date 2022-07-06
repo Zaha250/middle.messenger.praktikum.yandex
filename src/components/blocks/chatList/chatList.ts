@@ -1,18 +1,48 @@
-import {Block, router} from 'core';
+import { Block, router } from 'core';
+import { RootStateType, store } from 'store';
+import { ChatsStateType } from 'store/chats/initialState';
+import { connect } from 'HOC';
+import { getAllChats } from 'services/ChatService';
 import './chatList.scss';
 
-export class ChatList extends Block {
+interface IChatListProps {
+    user: User;
+    chats: ChatsStateType;
+}
+
+class ChatList extends Block {
     static componentName = 'ChatList';
 
-    constructor() {
-        super();
+    constructor(props: IChatListProps) {
+        super({
+            ...props,
+        });
         this.setProps({
-            navigateToSettings: () => this.navigateToSettings()
-        })
+            avatar: () => store.getState().user.profile?.avatar,
+            userName: () => store.getState().user.profile?.firstName,
+            isLoadChats: () => store.getState().chats.isLoad,
+            chats: () => store.getState().chats.chats,
+            navigateToSettings: () => this.navigateToSettings(),
+            showCreateChatModal: () => this.showCreateChatModal(),
+        });
     }
 
     navigateToSettings = () => {
         router.go('/settings');
+    };
+
+    showCreateChatModal = () => {
+        store.dispatch({
+            chats: {
+                createModal: { show: true },
+            },
+        });
+    };
+
+    componentDidMount(props: any) {
+        super.componentDidMount(props);
+
+        store.dispatch(getAllChats);
     }
 
     render() {
@@ -20,25 +50,47 @@ export class ChatList extends Block {
         return `
             <aside class="chatList">
                 <div class="chatList-header">
-                    {{{ Avatar wrapperClasses="chatList-header__avatar" name="Александр" onClick=navigateToSettings }}}
+                    {{{ Avatar 
+                            wrapperClasses="chatList-header__avatar" 
+                            name=userName
+                            photo=avatar 
+                            onClick=navigateToSettings 
+                    }}}
                     {{{ Search classes="chatList__search" }}}
+                        <div class="chatList-header__buttons">
+                            {{{Button text="Создать чат" classes="chatList-header__addChat" onClick=showCreateChatModal}}}
+                        </div>
+                    {{{CreateChatModal}}}
                 </div>
                 <div class="dialogs-body">
-                    {{{ Chat
-                            avatar="https://avatars.mds.yandex.net/get-kino-vod-films-gallery/28788/47e2fd514411e18b76af786d7417062d/100x64_3"
-                            name="Design Destroyer"
-                            last_message="Друзья, у меня для вас особенный выпуск новостей!..."
-                            lastMessageDate="10:49"
-                            unreadCount="3"
-                    }}}
-                    {{{ Chat
-                            avatar="https://i.pinimg.com/550x/31/23/2f/31232fe4b51b47763282524f008d9081.jpg"
-                            name="Стас Рогозин"
-                            last_message="Так увлёкся работой по курсу, что совсем забыл его анонсир..."
-                            lastMessageDate="1 Мая 2020"
-                    }}}
+                    {{#if isLoadChats}}
+                        <div class="chatList__spinner">
+                            {{{Spinner variant="primary"}}}
+                        </div>
+                    {{else}}
+                        <div>
+                            {{#each chats}}
+                                {{{ Chat
+                                        id=id
+                                        avatar=avatar
+                                        name=title
+                                        last_message=last_message
+                                        unreadCount=unread_count
+                                }}}
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </div>
             </aside>
         `;
     }
 }
+
+function mapStateToProps(state: RootStateType) {
+    return {
+        user: state.user.profile,
+        chats: state.chats.chats,
+    };
+}
+
+export default connect(mapStateToProps)(ChatList);

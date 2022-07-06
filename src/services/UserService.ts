@@ -1,15 +1,22 @@
-import {UserApi} from "api/userApi";
-import {UserDTO} from "api/types";
-import {hasApiError} from "../helpers/hasApiError";
-import {Dispatch, RootStateType} from "store";
+import { Dispatch, RootStateType } from 'store';
+import { UserApi } from 'api/userApi';
+import { UserDTO } from 'api/types';
+import { hasApiError } from 'helpers/hasApiError';
 
-export async function changeProfile(dispatch: Dispatch<RootStateType>, state: RootStateType, data: Omit<UserDTO, 'id' | 'avatar'>) {
+export async function changeProfile(
+    dispatch: Dispatch<RootStateType>,
+    state: RootStateType,
+    data: Omit<UserDTO, 'id' | 'avatar'>,
+) {
     try {
         const response = await UserApi.changeProfile(data);
 
         if (hasApiError(response)) {
             dispatch({
-                user: { error: response.reason, isLoad: false }
+                user: {
+                    error: response.reason,
+                    isLoad: false
+                },
             });
             console.error(response.reason);
             return;
@@ -26,27 +33,34 @@ export async function changeProfile(dispatch: Dispatch<RootStateType>, state: Ro
                     phone: response.phone,
                     avatar: response.avatar,
                     displayName: response.display_name
-                }
+                },
             },
         });
     } catch (e) {
         dispatch({
-            user: { error: e }
+            user: { error: e },
         });
     }
 }
 
-export async function changePassword(dispatch: Dispatch<RootStateType>, state: RootStateType, data: {oldPassword: string, newPassword: string}) {
+export async function changePassword(
+    dispatch: Dispatch<RootStateType>,
+    state: RootStateType,
+    data: { oldPassword: string, newPassword: string },
+) {
     try {
         dispatch({
-            changePassword: { isLoad: true }
+            changePassword: { isLoad: true },
         });
 
         const response = await UserApi.changePassword(data);
 
         if (hasApiError(response)) {
             dispatch({
-                changePassword: { error: response.reason, isLoad: false }
+                changePassword: {
+                    error: response.reason,
+                    isLoad: false
+                },
             });
             console.error(response.reason);
             return;
@@ -55,12 +69,16 @@ export async function changePassword(dispatch: Dispatch<RootStateType>, state: R
         dispatch({
             changePassword: {
                 success: true,
-                isLoad: false
+                isLoad: false,
             },
         });
     } catch (e) {
         dispatch({
-            changePassword: { error: e }
+            changePassword: { error: e },
         });
     }
+}
+
+export function searchUsers(login: string) {
+    return UserApi.search(login);
 }

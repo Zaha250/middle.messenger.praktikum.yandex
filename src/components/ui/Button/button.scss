@@ -11,34 +11,35 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all .15s ease-in;
-}
 
-.primary{
-  background-color: $primary;
-  color: #fff;
+  &.primary{
+    background-color: $primary;
+    color: #fff;
 
-  &:hover{
-    background-color: darken($primary, 5);
+    &:hover{
+      background-color: darken($primary, 5);
+    }
+  }
+
+  &.transparent{
+    color: $primary;
+  }
+
+  &.line{
+    text-align: left;
+    width: 100%;
+    color: $primary;
+    background: none;
+    border-bottom: 1px solid #eaeaea;
+    border-radius: 0;
+    padding: 10px 0;
+    font-size: 13px;
+    line-height: 13px;
+    transition: border-color .15s ease-in;
+
+    &:hover{
+      border-bottom-color: $primary;
+    }
   }
 }
 
-.transparent{
-  color: $primary;
-}
-
-.line{
-  text-align: left;
-  width: 100%;
-  color: $primary;
-  background: none;
-  border-bottom: 1px solid #eaeaea;
-  border-radius: 0;
-  padding: 10px 0;
-  font-size: 13px;
-  line-height: 13px;
-  transition: border-color .15s ease-in;
-
-  &:hover{
-    border-bottom-color: $primary;
-  }
-}

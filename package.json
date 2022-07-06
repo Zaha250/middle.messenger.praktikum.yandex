@@ -15,6 +15,7 @@
     "store": "./src/store",
     "api": "./src/api",
     "services": "./src/services",
+    "helpers": "./src/helpers",
     "pages": "./src/pages",
     "components": "./src/components",
     "HOC": "./src/HOC"

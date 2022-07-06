@@ -41,10 +41,12 @@ $message_bg: #EFEFEF;
   &__settings{
     border: none;
     outline: none;
-    background-color: transparent;
+    background-color: transparent!important;
     font-size: 24px;
     transform: rotate(90deg);
     cursor: pointer;
+    color: $black!important;
+    margin-left: auto;
   }
 
   &__date{

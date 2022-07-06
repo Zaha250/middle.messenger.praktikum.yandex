@@ -27,7 +27,7 @@ class Router {
     private routes: any[];
 
     use(pathname: string, block: typeof Block, props = {}) {
-        const route = new Route(pathname, block, {rootQuery: this._rootQuery, ...props});
+        const route = new Route(pathname, block, { rootQuery: this._rootQuery, ...props });
         this.routes.push(route);
 
         return this;
@@ -53,7 +53,7 @@ class Router {
         }
 
         this._currentRoute = route;
-        route.render(route, pathname);
+        route.render();
     }
 
     go(pathname: string) {

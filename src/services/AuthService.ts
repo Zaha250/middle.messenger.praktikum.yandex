@@ -1,18 +1,18 @@
 import { AuthApi, CreateUserType } from 'api/authApi';
 import { Dispatch, RootStateType } from 'store';
-import { hasApiError } from '../helpers/hasApiError';
-import {initApp} from "./InitApp";
-import router from "core/Router";
+import router from 'core/Router';
+import { hasApiError } from 'helpers/hasApiError';
+import { initApp } from './InitApp';
 
 export async function createUser(dispatch: Dispatch<RootStateType>, state: RootStateType, data: CreateUserType) {
     dispatch({
-        user: { isLoad: true }
+        user: { isLoad: true },
     });
     const response = await AuthApi.create(data);
 
     if (hasApiError(response)) {
         dispatch({
-            user: { error: response.reason, isLoad: false }
+            user: { error: response.reason, isLoad: false },
         });
         console.error(response.reason);
         return;
@@ -39,14 +39,13 @@ export async function createUser(dispatch: Dispatch<RootStateType>, state: RootS
 export async function login(dispatch: Dispatch<RootStateType>, state: RootStateType, data: CreateUserType) {
     try {
         dispatch({
-            user: { isLoad: true }
+            user: { isLoad: true },
         });
         const response = await AuthApi.login(data);
-        console.log(response)
 
         if (hasApiError(response)) {
             dispatch({
-                user: { error: response.reason, isLoad: false }
+                user: { error: response.reason, isLoad: false },
             });
             return;
         }
@@ -55,7 +54,7 @@ export async function login(dispatch: Dispatch<RootStateType>, state: RootStateT
         router.go('/messenger');
     } catch (e) {
         dispatch({
-            user: { error: e }
+            user: { error: e },
         });
     }
 }
@@ -63,23 +62,22 @@ export async function login(dispatch: Dispatch<RootStateType>, state: RootStateT
 export async function logout(dispatch: Dispatch<RootStateType>, state: RootStateType) {
     try {
         const response = await AuthApi.logout();
-        console.log(response)
 
         if (hasApiError(response)) {
             dispatch({
-                user: { error: response.reason, isLoad: false }
+                user: { error: response.reason, isLoad: false },
             });
             return;
         }
 
         dispatch({
-            user: { profile: null, isLoad: false }
+            user: { profile: null, isLoad: false },
         });
 
         router.go('/');
     } catch (e) {
         dispatch({
-            user: { error: e, isLoad: false }
+            user: { error: e, isLoad: false },
         });
     }
 }

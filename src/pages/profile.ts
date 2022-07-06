@@ -1,10 +1,10 @@
 import { Block } from 'core';
-import { validationField, ValidationRuleEnum } from '../helpers/validator';
-import {RootStateType, store} from "../store";
-import {connect, withRouter} from 'HOC';
-import {logout} from "services/AuthService";
-import Router from "core/Router";
-import {changeProfile} from "../services/UserService";
+import { validationField, ValidationRuleEnum } from 'helpers/validator';
+import { RootStateType, store } from 'store';
+import { connect, withRouter } from 'HOC';
+import Router from 'core/Router';
+import { logout } from 'services/AuthService';
+import { changeProfile } from 'services/UserService';
 import '../styles/pages/profile.scss';
 
 interface IProfilePageProps {
@@ -47,22 +47,21 @@ class ProfilePage extends Block {
         this.setProps({
             onLogout: () => this.onLogout(),
             showChangePasswordModal: () => this.showChangePasswordModal()
-        })
-
+        });
     }
 
     onLogout = () => {
         store.dispatch(logout);
-    }
+    };
 
     showChangePasswordModal = () => {
         store.dispatch({
-            changePassword: { show: true }
+            changePassword: { show: true },
         });
-    }
+    };
 
     render() {
-        const user = this.props.user
+        const { user } = this.props;
         // language=hbs
         return `
             <main class="profile">
@@ -158,8 +157,8 @@ class ProfilePage extends Block {
 
 function mapStateToProps(state: RootStateType) {
     return {
-        user: state.user.profile
-    }
+        user: state.user.profile,
+    };
 }
 
 export default withRouter(connect(mapStateToProps)(ProfilePage));

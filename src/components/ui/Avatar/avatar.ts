@@ -11,14 +11,12 @@ interface IAvatarProps {
 export class Avatar extends Block {
     static componentName = 'Avatar';
 
-    constructor({ wrapperClasses, photo, name, onClick }: IAvatarProps) {
+    constructor({ onClick, ...props }: IAvatarProps) {
         super({
-            wrapperClasses,
-            photo,
-            name,
+            ...props,
             events: {
                 click: onClick,
-            }
+            },
         });
     }
 

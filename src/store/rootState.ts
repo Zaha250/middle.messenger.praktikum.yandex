@@ -1,9 +1,11 @@
 import user from './user/initialState';
 import changePassword from './changePassword/initialState';
+import chats from './chats/initialState';
 
 const rootState = {
     user,
-    changePassword
+    changePassword,
+    chats,
 };
 
 export type RootStateType = typeof rootState;

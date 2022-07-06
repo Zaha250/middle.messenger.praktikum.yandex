@@ -1,10 +1,10 @@
 import { Block } from 'core';
+import { RootStateType, store } from 'store';
+import { connect, withRouter } from 'HOC';
+import { login } from 'services/AuthService';
+import { UserStateType } from 'store/user/initialState';
+import Router from 'core/Router';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
-import {RootStateType, store} from "../store";
-import {connect, withRouter} from 'HOC';
-import {login} from "services/AuthService";
-import {UserStateType} from "../store/user/initialState";
-import Router from "../core/Router";
 import '../styles/pages/auth.scss';
 
 interface IAuthPageProps {
@@ -30,7 +30,10 @@ class AuthPage extends Block {
                     if (inputs) {
                         inputs.forEach((input) => {
                             const { value, name, id } = input as HTMLInputElement;
-                            const errorMessage = validationField(ValidationRuleEnum[id as keyof typeof ValidationRuleEnum], value);
+                            const errorMessage = validationField(
+                                ValidationRuleEnum[id as keyof typeof ValidationRuleEnum],
+                                value,
+                            );
 
                             if (errorMessage) {
                                 isValid = false;
@@ -45,12 +48,12 @@ class AuthPage extends Block {
                         store.dispatch(login, data);
                     }
                 },
-            }
+            },
         });
 
         this.setProps({
-            onClick: () => this.props.router.go('/sign-up')
-        })
+            onClick: () => this.props.router.go('/sign-up'),
+        });
     }
 
     componentDidMount() {

@@ -1,8 +1,8 @@
-import {Block} from "core";
-import {validationField, ValidationRuleEnum} from "../../../helpers/validator";
-import {connect} from "HOC";
-import {RootStateType, store} from "store";
-import {changePassword} from "services/UserService";
+import { Block } from 'core';
+import { connect } from 'HOC';
+import { RootStateType, store } from 'store';
+import { changePassword } from 'services/UserService';
+import { validationField, ValidationRuleEnum } from '../../../helpers/validator';
 import './modal.scss';
 
 interface IChangePasswordModalProps {
@@ -17,13 +17,13 @@ class ChangePasswordModal extends Block {
 
     constructor(props: IChangePasswordModalProps) {
         super({
-            ...props
+            ...props,
         });
 
         this.setState({
             changePassword: () => this.changePassword(),
-            hideChangePasswordModal: () => this.hideChangePasswordModal()
-        })
+            hideChangePasswordModal: () => this.hideChangePasswordModal(),
+        });
     }
 
     changePassword = () => {
@@ -48,13 +48,13 @@ class ChangePasswordModal extends Block {
         if (isValid) {
             store.dispatch(changePassword, data);
         }
-    }
+    };
 
     hideChangePasswordModal = () => {
         store.dispatch({
-            changePassword: { show: false }
+            changePassword: { show: false },
         });
-    }
+    };
 
     render() {
         // language=hbs
@@ -106,8 +106,8 @@ function mapStateToProps(state: RootStateType) {
         show: state.changePassword.show,
         success: state.changePassword.success,
         error: state.changePassword.error,
-        isLoad: state.changePassword.isLoad
-    }
+        isLoad: state.changePassword.isLoad,
+    };
 }
 
 export default connect(mapStateToProps)(ChangePasswordModal);

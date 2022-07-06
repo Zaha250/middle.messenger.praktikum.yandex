@@ -1,9 +1,9 @@
 import { Block } from 'core';
+import { connect, withRouter } from 'HOC';
+import { RootStateType, store } from 'store';
+import { UserStateType } from 'store/user/initialState';
+import { createUser } from 'services/AuthService';
 import { validationField, ValidationRuleEnum } from '../helpers/validator';
-import { RootStateType, store } from '../store';
-import {connect, withRouter} from 'HOC';
-import { UserStateType } from '../store/user/initialState';
-import { createUser } from '../services/AuthService';
 import '../styles/pages/auth.scss';
 
 interface IRegPageProps {
@@ -27,15 +27,16 @@ class RegPage extends Block {
                     if (inputs) {
                         inputs.forEach((input) => {
                             const { value, name, id } = input as HTMLInputElement;
-                            const errorMessage = validationField(ValidationRuleEnum[id as keyof typeof ValidationRuleEnum], value);
+                            const errorMessage = validationField(
+                                ValidationRuleEnum[id as keyof typeof ValidationRuleEnum],
+                                value,
+                            );
 
                             if (errorMessage) {
                                 isValid = false;
                                 this.refs[name].refs.error.setProps({ text: errorMessage });
-                            } else {
-                                if (name) {
-                                    data[name] = value;
-                                }
+                            } else if (name) {
+                                data[name] = value;
                             }
                         });
                     }
@@ -49,15 +50,9 @@ class RegPage extends Block {
         });
 
         this.setProps({
-            navigateToLogin: () => this.props.router.go('/')
-        })
+            navigateToLogin: () => this.props.router.go('/'),
+        });
     }
-
-    /* protected getStateFromProps() {
-        this.state = {
-            userState: this.props.user,
-        };
-    } */
 
     render() {
         // language=hbs

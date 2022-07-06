@@ -1,24 +1,38 @@
 import { Block } from 'core';
+import { store } from 'store';
+import { getChatUsers } from 'services/ChatService';
 import './chat.scss';
+import { modifyQueryParams } from '../../../helpers/modifyQueryParams';
 
 interface IChatProps {
+    id: number;
     owner: boolean;
     avatar: string;
     name?: string;
     classes?: string;
     last_message: string;
-    lastMessageDate: string;
     unreadCount?: number;
 }
 
 export class Chat extends Block {
     static componentName = 'Chat';
 
-    constructor({
-        classes, last_message, lastMessageDate, owner, avatar, unreadCount, name, 
-    }: IChatProps) {
+    constructor({ id, ...props }: IChatProps) {
         super({
-            classes, last_message, lastMessageDate, owner, avatar, unreadCount, name,
+            ...props,
+            id,
+            events: {
+                click: () => {
+                    modifyQueryParams({
+                        queryParam: 'chatId', mode: 'set', value: id.toString(),
+                    });
+
+                    store.dispatch({
+                        chats: { activeChat: id },
+                    });
+                    store.dispatch(getChatUsers, id);
+                },
+            },
         });
     }
 
@@ -27,7 +41,7 @@ export class Chat extends Block {
         return `
             <div class="chat {{classes}}">
                 <div class="chat-avatar">
-                    <img src="{{avatar}}" alt="{{name}}" class="chat-avatar__img">
+                    {{{ Avatar wrapperClasses="chat-avatar__img" photo=avatar }}}
                 </div>
                 <div class="chat-info">
                     <div class="chat-content">
@@ -36,11 +50,15 @@ export class Chat extends Block {
                             {{#if owner}}
                                 <span>Вы:</span>
                             {{/if}}
-                            {{last_message}}
+                            {{#if last_message}}
+                                {{last_message.content}}
+                            {{else}}
+                                <span>Чат пуст</span>
+                            {{/if}}
                         </p>
                     </div>
                     <div class="chat-stats">
-                        <span class="chat__lastMessageDate">{{lastMessageDate}}</span>
+                        <span class="chat__lastMessageDate">{{last_message.time}}</span>
                         {{# if unreadCount}}
                             <span class="chat__unreadCount">
                                 {{unreadCount}}

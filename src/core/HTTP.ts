@@ -1,4 +1,5 @@
 import queryStringify from '../helpers/queryStringify';
+import { logger } from 'handlebars';
 
 enum METHODS {
     GET = 'GET',
@@ -69,7 +70,9 @@ class HTTP {
                 xhr.setRequestHeader(key, value);
             });
 
-            xhr.responseType = 'json';
+            if (headers['Content-Type'] === 'application/json') {
+                xhr.responseType = 'json';
+            }
 
             xhr.onload = () => {
                 resolve(xhr.response);
