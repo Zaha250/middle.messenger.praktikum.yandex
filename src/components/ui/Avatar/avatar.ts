@@ -26,7 +26,7 @@ export class Avatar extends Block {
         <div class="avatar {{wrapperClasses}}">
             <div class="avatar-photo {{classes}}">
                 {{#if photo}}
-                    <img src="{{photo}}" alt="{{name}}">
+                    <img src="${process.env.BASE_URL}/resources/{{photo}}" alt="{{name}}">
                 {{else}}
                     <div class="avatar-placeholder">
                     </div>

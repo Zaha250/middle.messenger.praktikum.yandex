@@ -54,6 +54,10 @@ class Dialog extends Block {
         }
     }
 
+    componentDidUpdate(oldProps: any, newProps: any): boolean {
+        return super.componentDidUpdate(oldProps, newProps);
+    }
+
     render() {
         // language=hbs
         if (!this.props.activeChat) {
@@ -86,7 +90,7 @@ class Dialog extends Block {
         return `
             <div class="dialog">
                 <div class="dialog-header">
-                    {{{ Avatar name="Replace" }}}
+                    {{{ Avatar name="${this.props.companion?.first_name}" }}}
                     {{{ Button text="..." classes="dialog__settings" }}}
                     {{{ Button text="Добавить пользователя" onClick=showSearchUsersModal }}}
                     {{{ SearchUsersModal }}}
@@ -111,6 +115,7 @@ function mapStateToProps(state: RootStateType) {
     return {
         chatUsers: state.chats.chatUsers.users,
         activeChat: state.chats.activeChat,
+        companion: state.chats.chatUsers.users.find(user => user.role === 'regular'),
     };
 }
 

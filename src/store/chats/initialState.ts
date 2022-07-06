@@ -25,7 +25,7 @@ export type ChatsStateType = {
     activeChat: Nullable<number>;
     chats: ChatResponseType[];
     chatUsers: {
-        users: UserDTO[];
+        users: ChatUsersType[];
         isLoad: boolean;
         error: Nullable<string>;
     };
@@ -36,5 +36,9 @@ export type ChatsStateType = {
         success: boolean;
     }
 };
+
+export type ChatUsersType = UserDTO & {
+    role: string;
+}
 
 export default initialState;

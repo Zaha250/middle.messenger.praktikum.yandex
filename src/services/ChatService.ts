@@ -1,4 +1,4 @@
-import { chatApi } from 'api/chatApi';
+import {AddUsersRequestDataType, chatApi} from 'api/chatApi';
 import { Dispatch, RootStateType } from 'store';
 import { hasApiError } from '../helpers/hasApiError';
 
@@ -86,7 +86,7 @@ export async function getChatUsers(dispatch: Dispatch<RootStateType>, state: Roo
     try{
         dispatch({
             chats: {
-                chatUsers: { isLoad: true },
+                chatUsers: { isLoad: true, users: [] },
             },
         });
 
@@ -119,5 +119,16 @@ export async function getChatUsers(dispatch: Dispatch<RootStateType>, state: Roo
                 chatUsers: { isLoad: false },
             },
         });
+    }
+}
+
+export async function addUsersToChat(data: AddUsersRequestDataType) {
+    try{
+        const response = await chatApi.addUsers(data);
+        console.log(response);
+
+        return response;
+    } catch (e) {
+        return e;
     }
 }

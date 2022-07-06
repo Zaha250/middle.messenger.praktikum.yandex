@@ -59,7 +59,7 @@ export async function changePassword(
             dispatch({
                 changePassword: {
                     error: response.reason,
-                    isLoad: false
+                    isLoad: false,
                 },
             });
             console.error(response.reason);

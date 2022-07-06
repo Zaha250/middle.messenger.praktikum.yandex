@@ -67,7 +67,7 @@ class ProfilePage extends Block {
             <main class="profile">
                 <div class="profile-avatar">
                     {{#if user.avatar}}
-                        <img src="{{user.avatar}}" alt="avatar">
+                        <img src="https://ya-praktikum.tech/api/v2/resources/{{user.avatar}}" alt="avatar">
                     {{else}}
                         <div class="profile-avatar__placeholder"></div>
                     {{/if}}

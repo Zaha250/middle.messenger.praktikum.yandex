@@ -1,6 +1,7 @@
 import { HTTP } from 'core';
 import { TRequestOptions } from 'core/HTTP';
 import { APIError, UserDTO } from './types';
+import {ChatUsersType} from "../store/chats/initialState";
 
 const ChatApiInstance = new HTTP('/chats');
 
@@ -28,8 +29,14 @@ export type ChatResponseType = {
     }
 };
 
+export type AddUsersRequestDataType = {
+    users: number[];
+    chatId: number;
+}
+
 export const chatApi = {
     getAll: () => ChatApiInstance.get<ChatResponseType[] | APIError>('', { ...options }),
     create: (title: string) => ChatApiInstance.post<string | APIError>('', { ...options, data: JSON.stringify({ title }) }),
-    getChatUsers: (chatId: number) => ChatApiInstance.get<UserDTO[] | APIError>(`/${chatId}/users`, { ...options }),
+    getChatUsers: (chatId: number) => ChatApiInstance.get<ChatUsersType[] | APIError>(`/${chatId}/users`, { ...options }),
+    addUsers: (data: AddUsersRequestDataType) => ChatApiInstance.put<string | APIError>(`/users`, { ...options, data: JSON.stringify(data) }),
 };

@@ -2,6 +2,7 @@ import { Block } from 'core';
 import { connect } from 'HOC';
 import { RootStateType, store } from 'store';
 import { searchUsers } from 'services/UserService';
+import { addUsersToChat, getChatUsers } from "services/ChatService";
 import { hasApiError } from 'helpers/hasApiError';
 import '../modal/modal.scss';
 import './searchUsersModal.scss';
@@ -64,9 +65,24 @@ class SearchUsersModal extends Block {
         });
     };
 
-    addUser = (e: MouseEvent) => {
-        console.log(1);
-        console.log(e.target);
+    addUser = async (e: MouseEvent) => {
+        const userId = e.target?.parentNode.dataset.userid;
+        const chatId = this.props.chatId;
+
+        const result = await addUsersToChat({
+            users: [Number(userId)],
+            chatId: chatId
+        });
+
+        if(hasApiError(result)){
+            this.setProps({
+                error: result.reason,
+            });
+            return;
+        }
+
+        store.dispatch(getChatUsers, chatId);
+        this.hideSearchUsersModal();
     };
 
     render() {
@@ -97,7 +113,7 @@ class SearchUsersModal extends Block {
                                     {{#each result}}
                                         <div class="searchUsers-user" data-userID="{{id}}">
                                             <h2>{{first_name}} {{second_name}}</h2>
-                                            {{{ Button text="+" onClick=addUser }}}
+                                            {{{ Button text="+" classes="searchUsers-user__addBtn" onClick=@root.addUser }}}
                                         </div>
                                     {{/each}}
                                 </div>
@@ -114,6 +130,7 @@ class SearchUsersModal extends Block {
 function mapStateToProps(state: RootStateType) {
     return {
         show: state.user.search.showModal,
+        chatId: state.chats.activeChat
     };
 }
 
